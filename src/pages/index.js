@@ -1,30 +1,44 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
-
 import Layout from '../components/layout';
+import ProductItem from '../components/product-item/product-item';
+import styles from './styles/home.module.css';
+import { minPrice as _minPrice } from '../helpers/helpers';
 
 const Home = ({ data }) => {
-  return (
-    <Layout>
-      <Link 
-        className="Home__shop-button"
-        to="/shop">
-        Shop Plants
-      </Link>
-      <h2>Easy to grow</h2>
-      {data.allMarkdownRemark.edges.map(({ node }) => {
-        return (
-          <div key={node.id}>
-            <Link to={node.fields.slug}>
-              <p>{node.frontmatter.title}</p>
-            </Link>
-          </div>
-        )
-      })}
-      <h2>Muffins?</h2>
-      <p>No muffins are available for purchase, but we certainly like to eat muffins here. We deliver plants in the Greater Ottawa Area</p>
-    </Layout>
-  )
+    return (
+        <Layout>
+            <div className={styles.home__cta}>
+                <Link
+                    className={styles.home__ctaButton}
+                    to="/shop">
+                    Shop Plants
+                </Link>
+            </div>
+            <div className={styles.home__contentContainer}>
+                <h2 className={styles.home__heading}>Easy to grow</h2>
+                <div className={styles.home__contentGrid}>
+                    {data.allMarkdownRemark.edges.map(({ node }) => {
+                        return (
+                            <ProductItem 
+                                key={node.id}
+                                product={{
+                                slug: node.fields.slug,
+                                fluid: node.frontmatter.image.childImageSharp.fluid,
+                                title: node.frontmatter.title,
+                                minPrice: _minPrice(node.frontmatter.priceBySize)
+                            }} />
+                        )
+                    })}
+                </div>
+            </div>
+            <div className={styles.home__contentContainer}>
+                <h2 className={styles.home__heading}>Muffins?</h2>
+                <p>No muffins are available for purchase, but we certainly like to eat muffins here. We deliver plants in the Greater Ottawa Area</p>
+            </div>
+
+        </Layout>
+    )
 }
 
 const query = graphql`
@@ -33,15 +47,24 @@ const query = graphql`
     edges {
       node {
         frontmatter {
-          title
-          sku
-          feature
+            title
+            sku
+            feature
+            image {
+                childImageSharp {
+                    fluid {
+                        ...GatsbyImageSharpFluid
+                    }
+                }
+            }
+            priceBySize {
+                price
+            }
         }
         id
         fields {
           slug
         }
-        html
       }
     }
   }

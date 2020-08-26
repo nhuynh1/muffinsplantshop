@@ -1,15 +1,16 @@
 ---
 title: Echeveria
 path: "/jellybean/"
-image: "images/jellybean.jpg"
+image: ../images/echeveria.jpg
 description: "Spiky little plant"
 price: 9.95
 sku: "EC022"
 sizes: ['Medium']
 feature: "Easy to grow"
+variety: Succulent
 priceBySize: 
     - size: Medium
-      price: 10.00
+      price: 10.95
     - size: Large
       price: 20.00
 ---

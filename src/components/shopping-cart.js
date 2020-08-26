@@ -28,6 +28,12 @@ const Cart = () => {
             quantity: e.target.value
         })
     }
+    const handleDeleteProduct = (sku) => () => {
+        cartDispatch({
+            type: 'REMOVE_FROM_CART',
+            sku
+        })
+    }
     return (
         <div>
             {cart.map((plant, index) => {
@@ -40,6 +46,11 @@ const Cart = () => {
                             type="number"
                             value={plant.quantity}
                             onChange={handleUpdateQuantity(plant.sku)} />
+                        <button
+                            type="button"
+                            onClick={handleDeleteProduct(plant.sku)}>
+                                X
+                        </button>
                     </div>
                 )
             })}

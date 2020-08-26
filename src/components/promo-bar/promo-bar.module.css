@@ -1,0 +1,16 @@
+.promobar {
+    align-items: center;
+    border-bottom: solid 1px #E4E4E4;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+.promobar__text {
+    color: black;
+    font-style: italic;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}

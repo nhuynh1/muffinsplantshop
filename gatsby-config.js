@@ -12,8 +12,7 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `products`,
-        path: `${__dirname}/src/products/`
+        path: `${__dirname}/src/products`
       }
     },
     `gatsby-transformer-remark`,

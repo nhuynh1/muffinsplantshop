@@ -1,50 +1,67 @@
 import React, { useState } from 'react';
 import { graphql, Link } from 'gatsby';
+import Img from "gatsby-image";
+import numeral from 'numeral';
 import Layout from '../components/layout';
-// import ShopFilters from '../components/shop-filters';
+import Checkbox from '../components/checkbox';
 import productSelector from '../selectors/products';
+import { minPrice as _minPrice } from '../helpers/helpers';
 
 const Shop = ({ data }) => {
     const [sizesFilter, setSizesFilter] = useState([]);
+    const [varietiesFilter, setVarietiesFilter] = useState([]);
+    const filteredProducts = productSelector(data.products.edges, { sizesFilter, varietiesFilter });
+    const sizes = data.sizes.group.map(({ size }) => size);
+    const varieties = data.varieties.group.map(({ variety }) => variety);
 
     const handleUpdateSizesFilters = (e) => {
-        if(e.target.checked) {
+        if (e.target.checked) {
             setSizesFilter([...sizesFilter, e.target.id])
         } else {
             setSizesFilter(sizesFilter.filter(size => e.target.id !== size))
         }
     }
 
-    const filteredProducts = productSelector(
-        data.allMarkdownRemark.edges,
-        { sizesFilter }
-    );
+    const handleUpdateVarietiesFilters = (e) => {
+        if (e.target.checked) {
+            setVarietiesFilter([...varietiesFilter, e.target.id])
+        } else {
+            setVarietiesFilter(varietiesFilter.filter(variety => e.target.id !== variety))
+        }
+    }
 
     return (
         <Layout>
             <h2>Plants for sale</h2>
-            {/* <ShopFilters updateFilters={handleUpdateFilters} /> */}
             <div>
-                <input 
-                    type="checkbox" 
-                    id="Small"
-                    checked={sizesFilter.includes("Small")}
-                    onChange={handleUpdateSizesFilters} />
-                <label htmlFor="Small">Small</label>
-                <input 
-                    type="checkbox" 
-                    id="Mini" 
-                    checked={sizesFilter.includes("Mini")}
-                    onChange={handleUpdateSizesFilters} />
-                <label htmlFor="Mini">Mini</label>
+                {sizes.map(size => (
+                    <Checkbox
+                        key={size}
+                        isSelected={sizesFilter.includes(size)}
+                        onChangeHandler={handleUpdateSizesFilters}
+                        label={size} />
+                ))}
             </div>
-            {filteredProducts.map(({ node }) => {
+            <div>
+                {varieties.map(variety => (
+                    <Checkbox
+                        key={variety}
+                        isSelected={varietiesFilter.includes(variety)}
+                        onChangeHandler={handleUpdateVarietiesFilters}
+                        label={variety} />
+                ))}
+            </div>
+            {filteredProducts.map(({ node: product }) => {
+                const minPrice = _minPrice(product.frontmatter.priceBySize);
                 return (
-                    <div key={node.id}>
-                        <Link to={node.fields.slug}>
-                            <p>{node.frontmatter.title}</p>
+                    <div key={product.id}>
+                        <Link to={product.fields.slug}>
+                            <Img
+                                fixed={product.frontmatter.image.childImageSharp.fixed}
+                                alt="" />
+                            <p>{product.frontmatter.title}</p>
                         </Link>
-                        <p>{node.frontmatter.price}</p>
+                        <p>From {numeral(minPrice).format('$0,0.00')}</p>
                     </div>
                 )
             })}
@@ -54,14 +71,34 @@ const Shop = ({ data }) => {
 
 const query = graphql`
   query {
-    allMarkdownRemark {
+    sizes: allMarkdownRemark {
+        group(field: frontmatter___priceBySize___size) {
+            size: fieldValue
+        }
+    }
+    varieties: allMarkdownRemark {
+        group(field: frontmatter___variety) {
+          variety: fieldValue
+        }
+    }
+    products: allMarkdownRemark {
       edges {
         node {
           frontmatter {
             title
-            price
             description
-            sizes
+            priceBySize {
+                price
+                size
+              }
+            image {
+                childImageSharp {
+                    fixed {
+                        ...GatsbyImageSharpFixed
+                    }
+                }
+            }
+            variety
           }
           id
           fields {
