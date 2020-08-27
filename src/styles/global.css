@@ -1,3 +1,7 @@
+:root {
+    --accentColor: #12B991;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -20,6 +24,11 @@ a:hover, a:focus {
 
 p, span {
     color: rgba(0,0,0, 0.75);
+    padding: 0;
+}
+
+p {
+    margin: 0.5rem 0;
 }
 
 button {
@@ -38,3 +47,35 @@ button {
     margin: 0;
     text-transform: uppercase;
 }
+
+.heading-third {
+    color: rgba(0,0,0, 0.85);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.text-light {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.link-with-arrow {
+    display: inline-block;
+    font-weight: 300;
+    margin: 2rem 0 0 0;
+}
+
+.link-with-arrow::after {
+    content: '⭢';
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.screen-reader-only {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { graphql, Link } from 'gatsby';
 import numeral from 'numeral';
 import Img from "gatsby-image";
@@ -10,13 +10,11 @@ const Product = ({ data }) => {
     const productData = data.product.frontmatter;
     const productBody = data.product.html;
     const [priceSize, setSize] = useState(productData.priceBySize[0]);
-    const nodeNotification = useRef(null);
+
     return (
         <Layout>
             <div className={styles.products__container}>
-                <span
-                    className={styles.products__cartNotification}
-                    ref={nodeNotification}></span>
+                
                 <Img
                     fluid={productData.image.childImageSharp.fluid}
                     alt={productData.title}
@@ -53,7 +51,7 @@ const Product = ({ data }) => {
                         price={priceSize.price}
                         sku={productData.sku}
                         size={priceSize.size}
-                        notificationNode={nodeNotification.current} />
+                        imageSrc={productData.image.childImageSharp.fluid.src} />
                 </div>
                 <Link
                     className={styles.products__shopLink}

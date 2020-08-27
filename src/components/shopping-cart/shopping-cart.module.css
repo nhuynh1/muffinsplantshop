@@ -7,9 +7,101 @@
     background-color: #12B991;
     border: none;
     color: white;
+    display: block;
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
     font-weight: 300;
     padding: 1rem 1.5rem;
     text-transform: uppercase;
+}
+
+.shoppingCart__cartNotification {
+    background-color: #12B991;
+    color: white;
+    display: none;
+    padding: 0.25rem 0;
+    text-align: center;
+    width: 100%;
+}
+
+.shoppingCart__checkoutButton {
+    background-color: var(--accentColor);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 1rem;
+    text-transform: uppercase;
+}
+
+.shoppingCart__cartFooter {
+    display: flex;
+    flex-direction: column;
+}
+
+.shoppingCart__cancelButton {
+    background: none;
+    border: none;
+    color: rgba(0,0,0, 0.55);
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 2rem 0;
+}
+
+.shoppingCart__cartTotal {
+    border: solid 1px #E4E4E4;
+    border-right: none;
+    border-left: none;
+    display: flex;
+    font-size: 1.13rem;
+    justify-content: space-between;
+    padding: 1.15rem 1rem 1.15rem 0;
+    margin: 2rem 0;
+    text-transform: uppercase;
+}
+
+.shoppingCart__cartItem {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem 0;
+}
+
+.shoppingCart__cartItemImage {
+    border: solid 1px #EEEEEE;
+    width: 100%;
+}
+
+.shoppingCart__cartItemDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.shoppingCart__quantity {
+    border: solid 1px var(--accentColor);
+    display: inline-flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+}
+
+.shoppingCart__quantityInput {
+    border: none;
+    flex: 1;
+    max-width: 3rem;
+    text-align: center;
+}
+
+.shoppingCart__quantityButton {
+    background: none;
+    border: none;
+}
+
+.shoppingCart__deleteCartItemButton {
+    background: none;
+    border: none;
+    color: var(--accentColor);
+    font-size: 1rem;
+    font-weight: 300;
 }

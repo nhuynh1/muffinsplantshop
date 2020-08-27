@@ -14,11 +14,44 @@
 .layout__headerText {
     font-size: 1.88rem;
     font-weight: 300;
-    margin: 0;
+    margin: 0 0 0 1rem;
     padding: 0;
 }
 
+.layout__menuButton {
+    background-color: transparent;
+    background-image: url('./images/menu.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: none;
+    height: 36px;
+    width: 36px;
+}
+
+.layout__menuButton:focus {
+    outline-color: #4b4b4b;
+    outline-style: dashed;
+    outline-width: 1px;
+}
+
+.layout__navigationMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 1rem;
+}
+
+.layout__navigationMenuItem {
+    color: rgba(0, 0, 0, 0.75);
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 0.5rem 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .layout__footer {
+    margin: 0 0 2rem 0;
     text-align: center;
 }
 
@@ -38,4 +71,15 @@
 
 .layout__footerLink:hover {
     text-decoration: underline;
+}
+
+.layout__footerSocialIcons {
+    background-color: transparent;
+    background-image: url(./images/instagram.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    height: 36px;
+    margin: 1rem auto;
+    width: 36px;
 }

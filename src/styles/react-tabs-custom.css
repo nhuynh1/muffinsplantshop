@@ -1,0 +1,45 @@
+.react-tabs {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .react-tabs__tab-list {
+    margin: 0 0 10px;
+    padding: 0;
+  }
+  
+  .react-tabs__tab {
+    background: white;
+    border: 1px solid #12B991;
+    bottom: -1px;
+    color: #12B991;
+    cursor: pointer;
+    display: inline-block;
+    list-style: none;
+    margin-right: 1rem;
+    padding: 1rem 2rem;
+    position: relative;
+  }
+  
+  .react-tabs__tab--selected {
+    background: #12B991;
+    color: white;
+  }
+  
+  .react-tabs__tab--disabled {
+    color: GrayText;
+    cursor: default;
+  }
+  
+  .react-tabs__tab:focus {
+    box-shadow: 0 0 5px hsl(208, 99%, 50%);
+    border-color: hsl(208, 99%, 50%);
+    outline: none;
+  }
+  
+  .react-tabs__tab-panel {
+    display: none;
+  }
+  
+  .react-tabs__tab-panel--selected {
+    display: block;
+  }

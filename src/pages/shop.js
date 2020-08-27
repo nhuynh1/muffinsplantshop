@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { graphql } from 'gatsby';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Layout from '../components/layout/layout';
-import Checkbox from '../components/checkbox';
+import Checkbox from '../components/checkbox/checkbox';
 import ProductItem from '../components/product-item/product-item';
 import productSelector from '../selectors/products';
 import { minPrice as _minPrice } from '../helpers/helpers';
+import '../styles/react-tabs-custom.css';
 
 const Shop = ({ data }) => {
     const [sizesFilter, setSizesFilter] = useState([]);
@@ -33,28 +35,15 @@ const Shop = ({ data }) => {
         <Layout>
             <div className="content-container">
                 <h2 className="heading-first">Shop</h2>
-                <p>Filter by</p>
-                <div className="filterTabs" style={{margin: `1rem 0`}}>
-                    <div role="tablist" aria-label="Product Filters">
-                        <button
-                            role="tab"
-                            aria-selected="true"
-                            aria-controls="variety-tab"
-                            id="variety">
-                            Variety
-                        </button>
-                        <button
-                            role="tab"
-                            aria-selected="false"
-                            aria-controls="size-tab"
-                            id="size">
-                            Size
-                        </button>
-                    </div>
-                    <div
-                        role="tabpanel"
-                        id="variety-tab"
-                        aria-labelledby="variety">
+            </div>
+            <div style={{ marginBottom: `2rem`, backgroundColor: `#F8F8F7`, padding: `1rem` }}>
+                <h3 className="heading-third">Filter by</h3>
+                <Tabs>
+                    <TabList>
+                        <Tab>Variety</Tab>
+                        <Tab>Size</Tab>
+                    </TabList>
+                    <TabPanel>
                         {varieties.map(variety => (
                             <Checkbox
                                 key={variety}
@@ -62,12 +51,8 @@ const Shop = ({ data }) => {
                                 onChangeHandler={handleUpdateVarietiesFilters}
                                 label={variety} />
                         ))}
-                    </div>
-                    <div
-                        role="tabpanel"
-                        id="size-tab"
-                        aria-labelledby="size"
-                        hidden="">
+                    </TabPanel>
+                    <TabPanel>
                         {sizes.map(size => (
                             <Checkbox
                                 key={size}
@@ -75,9 +60,10 @@ const Shop = ({ data }) => {
                                 onChangeHandler={handleUpdateSizesFilters}
                                 label={size} />
                         ))}
-                    </div>
-                </div>
-
+                    </TabPanel>
+                </Tabs>
+            </div>
+            <div className="content-container">
                 <div style={{ display: `grid`, gridTemplateColumns: `1fr 1fr`, gridGap: `1rem` }}>
                     {filteredProducts.map(({ node: product }) => {
                         return (

@@ -1,11 +1,8 @@
 ---
 title: Echeveria
-path: "/jellybean/"
 image: ../images/echeveria.jpg
-description: "Spiky little plant"
-price: 9.95
+description: "A little green rosette"
 sku: "EC022"
-sizes: ['Medium']
 feature: "Easy to grow"
 variety: Succulent
 priceBySize: 
@@ -15,7 +12,7 @@ priceBySize:
       price: 20.00
 plantCare:
     light: "Sunny conditions"
-    water: "Biweekly"
+    water: "Water thoroughly directly on the soil and do not water again until soil is dry"
 ---
 
-Colorful chubby, little red-tipped leaves that look like jelly beans make it a favorite. It is sometimes called pork-n-beans because the leaves sometimes turn bronze in summer.
+Echeveria look amazing in patio planters. Echeveria are originally from Mexico and Central America.

@@ -1,10 +1,3 @@
-.products__cartNotification {
-    background-color: #12B991;
-    color: white;
-    display: block;
-    text-align: center;
-}
-
 .products__container {
     padding: 1rem;
 }
@@ -65,7 +58,8 @@
 
 .products__addToCartButtonWrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .products__shopLink {
