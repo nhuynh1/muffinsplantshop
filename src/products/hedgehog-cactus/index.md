@@ -11,7 +11,7 @@ priceBySize:
 - size: Small
   price: "10.95"
 - size: Medium
-  price: "7.95"
+  price: "12.95"
 plantCare:
   light: Thrives in medium to direct sunlight
   water: Water once a month to once every two months
