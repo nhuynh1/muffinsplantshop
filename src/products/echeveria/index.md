@@ -13,6 +13,9 @@ priceBySize:
       price: 10.95
     - size: Large
       price: 20.00
+plantCare:
+    light: "Sunny conditions"
+    water: "Biweekly"
 ---
 
 Colorful chubby, little red-tipped leaves that look like jelly beans make it a favorite. It is sometimes called pork-n-beans because the leaves sometimes turn bronze in summer.

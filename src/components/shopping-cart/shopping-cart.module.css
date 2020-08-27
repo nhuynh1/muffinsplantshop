@@ -1,0 +1,15 @@
+.shoppingCart__cartButton {
+    background: transparent;
+    border: none;
+}
+
+.shoppingCart__addToCartButton {
+    background-color: #12B991;
+    border: none;
+    color: white;
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 1rem 1.5rem;
+    text-transform: uppercase;
+}

@@ -17,9 +17,18 @@ module.exports = {
     },
     `gatsby-transformer-remark`,
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        fonts: [
+          {
+            family: `Source Sans Pro`,
+            variants: [`300`, `400`]
+          },
+          {
+            family: `Montserrat`,
+            variants: [`400`, `500`]
+          },
+        ],
       },
     },
     `gatsby-plugin-sharp`,

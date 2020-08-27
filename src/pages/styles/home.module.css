@@ -16,17 +16,6 @@
     text-transform: uppercase;
 }
 
-.home__heading {
-    color: black;
-    padding: 1rem 0;
-    margin: 0;
-    text-transform: uppercase;
-}
-
-.home__contentContainer {
-    padding: 1rem;
-}
-
 .home__contentGrid {
     display: grid;
     grid-gap: 1rem;

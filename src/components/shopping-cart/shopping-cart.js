@@ -1,18 +1,25 @@
 import React, { useContext } from 'react';
-import { CartContext } from '../../wrap-with-provider';
-import cartQuantityTotal from '../selectors/cartQuantity';
+import { Link } from 'gatsby';
+import { CartContext } from '../../../wrap-with-provider';
+import cartQuantityTotal from '../../selectors/cartQuantity';
+import styles from './shopping-cart.module.css';
 
-const AddToCart = ({ title, price, sku, size }) => {
+const AddToCart = ({ title, price, sku, size, notificationNode }) => {
     const { cartDispatch } = useContext(CartContext);
 
     const add = () => {
         cartDispatch({
             type: 'ADD_TO_CART',
             product: { title, price, sku, size, quantity: 1 }
-        })
+        });
+        notificationNode.textContent = `${title} - ${size} added to cart`;
+        setTimeout(() => {
+            notificationNode.textContent = '';
+        }, 5000);
     }
     return (
         <button
+            className={styles.shoppingCart__addToCartButton}
             onClick={add}>
             Add to cart
         </button>
@@ -49,7 +56,7 @@ const Cart = () => {
                         <button
                             type="button"
                             onClick={handleDeleteProduct(plant.sku)}>
-                                X
+                            X
                         </button>
                     </div>
                 )
@@ -61,10 +68,11 @@ const Cart = () => {
 const CartButton = () => {
     const { cart } = useContext(CartContext);
     return (
-        <button
-            type="button">
+        <Link
+            className={styles.shoppingCart__cartButton}
+            to="/cart">
             Cart ({cartQuantityTotal(cart)})
-        </button>
+        </Link>
     )
 }
 

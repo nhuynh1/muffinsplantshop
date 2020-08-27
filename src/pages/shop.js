@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { graphql, Link } from 'gatsby';
-import Img from "gatsby-image";
-import numeral from 'numeral';
-import Layout from '../components/layout';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout/layout';
 import Checkbox from '../components/checkbox';
+import ProductItem from '../components/product-item/product-item';
 import productSelector from '../selectors/products';
 import { minPrice as _minPrice } from '../helpers/helpers';
 
@@ -32,39 +31,69 @@ const Shop = ({ data }) => {
 
     return (
         <Layout>
-            <h2>Plants for sale</h2>
-            <div>
-                {sizes.map(size => (
-                    <Checkbox
-                        key={size}
-                        isSelected={sizesFilter.includes(size)}
-                        onChangeHandler={handleUpdateSizesFilters}
-                        label={size} />
-                ))}
-            </div>
-            <div>
-                {varieties.map(variety => (
-                    <Checkbox
-                        key={variety}
-                        isSelected={varietiesFilter.includes(variety)}
-                        onChangeHandler={handleUpdateVarietiesFilters}
-                        label={variety} />
-                ))}
-            </div>
-            {filteredProducts.map(({ node: product }) => {
-                const minPrice = _minPrice(product.frontmatter.priceBySize);
-                return (
-                    <div key={product.id}>
-                        <Link to={product.fields.slug}>
-                            <Img
-                                fixed={product.frontmatter.image.childImageSharp.fixed}
-                                alt="" />
-                            <p>{product.frontmatter.title}</p>
-                        </Link>
-                        <p>From {numeral(minPrice).format('$0,0.00')}</p>
+            <div className="content-container">
+                <h2 className="heading-first">Shop</h2>
+                <p>Filter by</p>
+                <div className="filterTabs" style={{margin: `1rem 0`}}>
+                    <div role="tablist" aria-label="Product Filters">
+                        <button
+                            role="tab"
+                            aria-selected="true"
+                            aria-controls="variety-tab"
+                            id="variety">
+                            Variety
+                        </button>
+                        <button
+                            role="tab"
+                            aria-selected="false"
+                            aria-controls="size-tab"
+                            id="size">
+                            Size
+                        </button>
                     </div>
-                )
-            })}
+                    <div
+                        role="tabpanel"
+                        id="variety-tab"
+                        aria-labelledby="variety">
+                        {varieties.map(variety => (
+                            <Checkbox
+                                key={variety}
+                                isSelected={varietiesFilter.includes(variety)}
+                                onChangeHandler={handleUpdateVarietiesFilters}
+                                label={variety} />
+                        ))}
+                    </div>
+                    <div
+                        role="tabpanel"
+                        id="size-tab"
+                        aria-labelledby="size"
+                        hidden="">
+                        {sizes.map(size => (
+                            <Checkbox
+                                key={size}
+                                isSelected={sizesFilter.includes(size)}
+                                onChangeHandler={handleUpdateSizesFilters}
+                                label={size} />
+                        ))}
+                    </div>
+                </div>
+
+                <div style={{ display: `grid`, gridTemplateColumns: `1fr 1fr`, gridGap: `1rem` }}>
+                    {filteredProducts.map(({ node: product }) => {
+                        return (
+                            <ProductItem
+                                key={product.id}
+                                product={{
+                                    slug: product.fields.slug,
+                                    fluid: product.frontmatter.image.childImageSharp.fluid,
+                                    title: product.frontmatter.title,
+                                    minPrice: _minPrice(product.frontmatter.priceBySize)
+                                }}
+                            />
+                        )
+                    })}
+                </div>
+            </div>
         </Layout>
     )
 }
@@ -91,10 +120,10 @@ const query = graphql`
                 price
                 size
               }
-            image {
+              image {
                 childImageSharp {
-                    fixed {
-                        ...GatsbyImageSharpFixed
+                    fluid(fit: COVER, maxWidth: 358, maxHeight: 488, cropFocus: CENTER) {
+                        ...GatsbyImageSharpFluid
                     }
                 }
             }

@@ -4,17 +4,9 @@ import CartReducer from './src/reducers/cart';
 export const CartContext = React.createContext();
 
 const CartProvider = ({ children }) => {
-    const [cart, cartDispatch] = useReducer(CartReducer, []);
-
-    useEffect(() => {
-        const cart = localStorage.getItem('muffinPlantsCart');
-        if (cart) {
-            cartDispatch({
-                type: 'SET_CART',
-                cart: JSON.parse(cart)
-            });
-        }
-    }, []);
+    const cartFromStorage = localStorage.getItem('muffinPlantsCart');
+    const initialCartState = cartFromStorage ? JSON.parse(cartFromStorage) : [];
+    const [cart, cartDispatch] = useReducer(CartReducer, initialCartState);
 
     useEffect(() => {
         localStorage.setItem('muffinPlantsCart', JSON.stringify(cart));

@@ -1,5 +1,6 @@
 .productItem img {
     border: solid 1px #EEEEEE;
+    display: block;
 }
 
 .productItem__text {

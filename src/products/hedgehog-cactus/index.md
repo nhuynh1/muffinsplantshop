@@ -10,6 +10,11 @@ variety: Cactus
 priceBySize: 
     - size: Mini
       price: 8.95
+    - size: Small
+      price: 10.95
+plantCare:
+    light: "Thrives in medium to direct sunlight"
+    water: "Water once a month to once every two months"
 ---
 
-Colorful chubby, little red-tipped leaves that look like jelly beans make it a favorite. It is sometimes called pork-n-beans because the leaves sometimes turn bronze in summer.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id euismod justo. Pellentesque porta bibendum nibh at fringilla. Aenean condimentum libero vel maximus elementum. Sed id arcu lectus. Donec vel lectus placerat nulla sagittis commodo. Aliquam tristique quis ligula sed suscipit. Mauris at enim eget risus tempor feugiat.
