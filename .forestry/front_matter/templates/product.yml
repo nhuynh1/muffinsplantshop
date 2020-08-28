@@ -1,0 +1,42 @@
+---
+label: Product
+hide_body: false
+fields:
+- type: text
+  name: title
+  label: title
+- type: file
+  name: image
+  label: image
+- type: text
+  name: description
+  label: description
+- type: text
+  name: sku
+  label: sku
+- type: text
+  name: feature
+  label: feature
+- type: text
+  name: variety
+  label: variety
+- type: field_group_list
+  name: priceBySize
+  label: priceBySize
+  fields:
+  - type: text
+    name: size
+    label: size
+  - type: number
+    name: price
+    label: price
+- type: field_group
+  name: plantCare
+  label: plantCare
+  fields:
+  - type: text
+    name: light
+    label: light
+  - type: text
+    name: water
+    label: water
