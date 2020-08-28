@@ -24,7 +24,7 @@ const Home = ({ data }) => {
                                 key={node.id}
                                 product={{
                                     slug: node.fields.slug,
-                                    fluid: node.frontmatter.image.childImageSharp.fluid,
+                                    fluid: node.frontmatter.imageAbs.childImageSharp.fluid,
                                     title: node.frontmatter.title,
                                     minPrice: _minPrice(node.frontmatter.priceBySize)
                             }} />
@@ -50,7 +50,7 @@ const query = graphql`
             title
             sku
             feature
-            image {
+            imageAbs {
                 childImageSharp {
                     fluid(fit: COVER, maxWidth: 358, maxHeight: 488, cropFocus: CENTER) {
                         ...GatsbyImageSharpFluid
