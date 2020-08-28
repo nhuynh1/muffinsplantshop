@@ -7,9 +7,8 @@ sections:
 - type: heading
   label: Product Options
 - type: document
-  path: src/products/options
+  path: src/products/options/sizes.json
   label: Sizes
-  match: "**/*"
 - type: directory
   path: src/products
   label: Products
