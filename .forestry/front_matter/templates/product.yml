@@ -51,3 +51,5 @@ fields:
   - type: text
     name: water
     label: water
+pages:
+- src/products/aloe-vera/index.md
