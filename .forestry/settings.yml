@@ -10,7 +10,7 @@ sections:
   path: src/products
   label: Products
   create: all
-  match: "**/*"
+  match: "**/*.md"
 - type: heading
   label: Product Options
 - type: document
