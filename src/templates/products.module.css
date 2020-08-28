@@ -37,18 +37,28 @@
 }
 
 .products__sizeOption + label {
-    border: solid 1px rgba(0,0,0, 0.65);
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.65);
+    display: flex;
+    justify-content: space-between;
     margin: 1rem 0;
     padding: 1rem;
 }
 
 .products__sizeOption:checked + label {
-    border-color: currentColor;
-    border-width: 3px;
+    box-shadow: 0 0 0 2px currentColor;
     color: #12B991;
+}
+
+.products__sizeLabel {
+    color: inherit;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    padding-right: 1rem;
+}
+
+.products__sizeDescription {
+    color: inherit;
+    font-size: 1rem;
 }
 
 .products__price {
@@ -60,18 +70,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.products__shopLink {
-    display: inline-block;
-    font-weight: 300;
-    margin: 2rem 0 0 0;
-}
-
-.products__shopLink::after {
-    content: '⭢';
-    display: inline-block;
-    margin-left: 0.5rem;
 }
 
 .products__care {

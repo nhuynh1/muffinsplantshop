@@ -1,0 +1,26 @@
+[
+    {
+        "id": "Mini",
+        "label": "Mini",
+        "longDescription": "Planter size is approximately 4” wide and 4” tall",
+        "shortDescription": "4”"
+    },
+    {
+        "id": "Small",
+        "label": "Small",
+        "longDescription": "Planter size is approximately 5” wide and 4.5” tall",
+        "shortDescription": "5”"
+    },
+    {
+        "id": "Medium",
+        "label": "Medium",
+        "longDescription": "Planter size is approximately 7” wide and 6” tall",
+        "shortDescription": "6”"
+    },
+    {
+        "id": "Large",
+        "label": "Large",
+        "longDescription": "Planter size is approximately 12” wide and 11” tall",
+        "shortDescription": "12”"
+    }
+]

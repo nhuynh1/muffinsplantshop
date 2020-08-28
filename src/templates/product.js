@@ -14,9 +14,9 @@ const Product = ({ data }) => {
     return (
         <Layout>
             <div className={styles.products__container}>
-                
+
                 <Img
-                    fluid={productData.image.childImageSharp.fluid}
+                    fluid={productData.imageAbs.childImageSharp.fluid}
                     alt={productData.title}
                     style={{ border: `solid 1px #EEEEEE` }}
                 />
@@ -30,16 +30,19 @@ const Product = ({ data }) => {
                     productData.priceBySize.map((priceSizeObj) => {
                         const { size: _size } = priceSizeObj;
                         return (
-                            <span key={_size}>
+                            <span key={_size.label}>
                                 <input
                                     className={styles.products__sizeOption}
                                     type="radio"
                                     name="size"
-                                    value={_size}
-                                    id={_size}
-                                    checked={_size === priceSize.size}
+                                    value={_size.label}
+                                    id={_size.label}
+                                    checked={_size.label === priceSize.size.label}
                                     onChange={() => setSize({ ...priceSizeObj })} />
-                                <label htmlFor={_size}>{_size}</label>
+                                <label htmlFor={_size.label}>
+                                    <span className={styles.products__sizeLabel}>{_size.label}</span>
+                                    <span className={styles.products__sizeDescription}>{_size.longDescription}</span>
+                                </label>
                             </span>
                         )
                     })
@@ -50,11 +53,11 @@ const Product = ({ data }) => {
                         title={productData.title}
                         price={priceSize.price}
                         sku={productData.sku}
-                        size={priceSize.size}
-                        imageSrc={productData.image.childImageSharp.fluid.src} />
+                        size={priceSize.size.label}
+                        imageSrc={productData.imageAbs.childImageSharp.fluid.src} />
                 </div>
                 <Link
-                    className={styles.products__shopLink}
+                    className="link-with-arrow"
                     to="/shop">
                     See more plants
                 </Link>
@@ -84,9 +87,12 @@ const query = graphql`
                 sku
                 priceBySize {
                     price
-                    size
+                    size {
+                        label
+                        longDescription
+                    }
                 }
-                image {
+                imageAbs {
                     childImageSharp {
                         fluid(fit: COVER, maxWidth: 358, maxHeight: 488, cropFocus: CENTER) {
                             ...GatsbyImageSharpFluid

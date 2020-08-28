@@ -71,7 +71,7 @@ const Shop = ({ data }) => {
                                 key={product.id}
                                 product={{
                                     slug: product.fields.slug,
-                                    fluid: product.frontmatter.image.childImageSharp.fluid,
+                                    fluid: product.frontmatter.imageAbs.childImageSharp.fluid,
                                     title: product.frontmatter.title,
                                     minPrice: _minPrice(product.frontmatter.priceBySize)
                                 }}
@@ -87,8 +87,8 @@ const Shop = ({ data }) => {
 const query = graphql`
   query {
     sizes: allMarkdownRemark {
-        group(field: frontmatter___priceBySize___size) {
-            size: fieldValue
+        group(field: frontmatter___priceBySize___size___label) {
+          size: fieldValue
         }
     }
     varieties: allMarkdownRemark {
@@ -96,7 +96,7 @@ const query = graphql`
           variety: fieldValue
         }
     }
-    products: allMarkdownRemark {
+    products: allMarkdownRemark (sort: {order: ASC, fields: frontmatter___title}) {
       edges {
         node {
           frontmatter {
@@ -104,9 +104,11 @@ const query = graphql`
             description
             priceBySize {
                 price
-                size
+                size {
+                    label
+                }
               }
-              image {
+              imageAbs {
                 childImageSharp {
                     fluid(fit: COVER, maxWidth: 358, maxHeight: 488, cropFocus: CENTER) {
                         ...GatsbyImageSharpFluid

@@ -8,6 +8,9 @@ module.exports = {
   siteMetadata: {
     title: `Muffin's Plants`
   },
+  mapping: {
+    'MarkdownRemark.frontmatter.priceBySize.size': `SizesJson`,
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
@@ -16,6 +19,7 @@ module.exports = {
       }
     },
     `gatsby-transformer-remark`,
+    `gatsby-transformer-json`,
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {

@@ -43,7 +43,7 @@ const Home = ({ data }) => {
 
 const query = graphql`
   query {
-  allMarkdownRemark(filter: {frontmatter: {feature: {eq: "Easy to grow"}}}) {
+  allMarkdownRemark(filter: {frontmatter: {feature: {eq: "Easy to grow"}}}, sort: {order: ASC, fields: frontmatter___title}) {
     edges {
       node {
         frontmatter {

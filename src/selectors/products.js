@@ -4,7 +4,7 @@ const productSelector = (products, { sizesFilter = [], varietiesFilter = [] }) =
         const { priceBySize, variety } = product.frontmatter;
         if (priceBySize.length > 0 && variety) {
             const sizeMatch = sizesFilter.length > 0 ?
-                                priceBySize.some(({ size }) => sizesFilter.includes(size)) :
+                                priceBySize.some(({ size }) => sizesFilter.includes(size.label)) :
                                 true;
             const varietyMatch = varietiesFilter.length > 0 ?
                                     varietiesFilter.includes(variety) :
