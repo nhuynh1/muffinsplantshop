@@ -1,6 +1,6 @@
 ---
 label: Product
-hide_body: false
+hide_body: true
 fields:
 - type: text
   name: title
@@ -14,12 +14,23 @@ fields:
 - type: text
   name: sku
   label: sku
+- name: variety
+  type: select
+  default: []
+  config:
+    required: false
+    options:
+    - Succulent
+    - Cactus
+    source:
+      type: simple
+      section: 
+      file: 
+      path: 
+  label: variety
 - type: text
   name: feature
   label: feature
-- type: text
-  name: variety
-  label: variety
 - type: field_group_list
   name: priceBySize
   label: priceBySize
