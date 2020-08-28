@@ -40,5 +40,3 @@ fields:
   - type: text
     name: water
     label: water
-pages:
-- src/products/test/test-plant.md
