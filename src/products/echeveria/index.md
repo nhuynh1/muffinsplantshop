@@ -1,6 +1,7 @@
 ---
 title: Echeveria
 image: ../images/echeveria.jpg
+imageAbs: /src/products/images/echeveria.jpg
 description: "A little green rosette"
 sku: "EC022"
 feature: "Easy to grow"

@@ -33,5 +33,11 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
+    {
+      resolve: "gatsby-remark-normalize-paths",
+      options: {
+          pathFields: ["imageAbs"],
+      },
+    },
   ],
 }

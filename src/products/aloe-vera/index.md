@@ -1,6 +1,7 @@
 ---
 title: Aloe Vera
 image: ../images/aloe-vera.jpg
+imageAbs: /src/products/images/aloe-vera.jpg
 description: "Our most popular succulent"
 sku: "AV014"
 feature: ""

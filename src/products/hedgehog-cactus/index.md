@@ -1,6 +1,7 @@
 ---
 title: Hedgehog Cactus
 image: ../images/hedgehog-cactus.jpg
+imageAbs: /src/products/images/hedgehog-cactus.jpg
 description: "You can name it Sonic if you want"
 sku: "HC059"
 feature: "Easy to grow"

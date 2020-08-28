@@ -1,6 +1,7 @@
 ---
 title: Gasteria
 image: ../images/gasteria.jpg
+imageAbs: /src/products/images/gasteria.jpg
 description: "Also known as 'Ox Tongue'"
 sku: "JB018"
 feature: "Easy to grow"
