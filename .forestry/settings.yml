@@ -4,11 +4,17 @@ auto_deploy: false
 admin_path: 
 webhook_url: 
 sections:
+- type: document
+  path: src/products/options
+  label: Sizes
+  match: "**/*"
 - type: directory
   path: src/products
   label: Products
   create: all
   match: "**/*"
+- type: heading
+  label: Product Options
 upload_dir: src/products/images
 public_path: "/src/products/images"
 front_matter_path: ''
