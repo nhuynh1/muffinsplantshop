@@ -1,14 +1,17 @@
 import React from 'react'
+import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
 
 const DeliveryInfo = ({ data }) => {
-    return (
-        <Layout>
-            <div
-                className="content-container"
-                dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
-        </Layout>
-    )
+  return (
+    <Layout>
+      <SEO title="Delivery Information" />
+      <div
+        className="content-container"
+        dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
+    </Layout>
+  )
 }
 
 const query = graphql`

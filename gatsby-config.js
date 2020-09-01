@@ -6,7 +6,9 @@
 
 module.exports = {
   siteMetadata: {
-    title: `Muffin's Plants`
+    title: `Muffin's Plants`,
+    description: `A demo e-commerce website built with Gatsby.js`,
+    author: `nh_writes`,
   },
   mapping: {
     'MarkdownRemark.frontmatter.priceBySize.size': `SizesJson`,
@@ -49,5 +51,6 @@ module.exports = {
           pathFields: ["imageAbs"],
       },
     },
+    `gatsby-plugin-react-helmet`,
   ],
 }

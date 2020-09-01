@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import { CartButton, Cart } from '../shopping-cart/shopping-cart';
 import PromoBar from '../promo-bar/promo-bar';
@@ -17,6 +17,14 @@ const Layout = ({ children }) => {
 
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const [isOpenCart, setIsOpenCart] = useState(false);
+    
+    useEffect(() => {
+        if(isOpenCart){
+            document.body.setAttribute('style', 'overflow-y:hidden; position: fixed; left: 0; right: 0');
+        } else {
+            document.body.setAttribute('style', '');
+        }
+    }, [isOpenCart])
 
     return (
         <div id="root" className={`${isOpenCart && styles.layout__cartOpen}`}>

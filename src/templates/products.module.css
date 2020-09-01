@@ -46,7 +46,7 @@
 
 .products__sizeOption:checked + label {
     box-shadow: 0 0 0 2px currentColor;
-    color: #12B991;
+    color: var(--accentColor);
 }
 
 .products__sizeLabel {

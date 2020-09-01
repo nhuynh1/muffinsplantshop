@@ -9,9 +9,9 @@
   
   .react-tabs__tab {
     background: white;
-    border: 1px solid #12B991;
+    border: 1px solid var(--accentColor);
     bottom: -1px;
-    color: #12B991;
+    color: var(--accentColor);
     cursor: pointer;
     display: inline-block;
     list-style: none;
@@ -21,7 +21,7 @@
   }
   
   .react-tabs__tab--selected {
-    background: #12B991;
+    background: var(--accentColor);
     color: white;
   }
   

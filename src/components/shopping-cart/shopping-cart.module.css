@@ -4,7 +4,7 @@
 }
 
 .shoppingCart__addToCartButton {
-    background-color: #12B991;
+    background-color: var(--accentColor);
     border: none;
     color: white;
     display: block;
@@ -16,7 +16,7 @@
 }
 
 .shoppingCart__cartNotification {
-    background-color: #12B991;
+    background-color: var(--accentColor);
     color: white;
     display: none;
     padding: 0.25rem 0;

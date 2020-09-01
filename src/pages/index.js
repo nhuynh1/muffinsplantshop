@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
 import ProductItem from '../components/product-item/product-item';
 import styles from './styles/home.module.css';
 import { minPrice as _minPrice } from '../helpers/helpers';
@@ -8,6 +9,7 @@ import { minPrice as _minPrice } from '../helpers/helpers';
 const Home = ({ data }) => {
     return (
         <Layout>
+            <SEO title="Shop Demo" />
             <div className={styles.home__cta}>
                 <div className={styles.home__ctaText}>
                     <h2>Plants Are Like Muffins</h2>

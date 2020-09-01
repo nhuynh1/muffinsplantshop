@@ -1,10 +1,12 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
 
 const About = ({ data }) => {
     return (
         <Layout>
+            <SEO title="About" />
             <div
                 className="content-container"
                 dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />

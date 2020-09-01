@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
 import Checkbox from '../components/checkbox/checkbox';
 import ProductItem from '../components/product-item/product-item';
 import productSelector from '../selectors/products';
@@ -34,6 +35,7 @@ const Shop = ({ data }) => {
 
     return (
         <Layout>
+            <SEO title="Shop" />
             <div className="content-container">
                 <h2 className="heading-first">Shop</h2>
             </div>

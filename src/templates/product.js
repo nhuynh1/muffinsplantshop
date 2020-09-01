@@ -3,6 +3,7 @@ import { graphql, Link } from 'gatsby';
 import numeral from 'numeral';
 import Img from "gatsby-image";
 import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
 import { AddToCart } from '../components/shopping-cart/shopping-cart';
 import styles from './products.module.css';
 
@@ -13,6 +14,7 @@ const Product = ({ data }) => {
 
     return (
         <Layout>
+            <SEO title={productData.title} />
             <div className={styles.products__container}>
 
                 <Img
