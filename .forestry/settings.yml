@@ -4,11 +4,18 @@ auto_deploy: false
 admin_path: 
 webhook_url: 
 sections:
+- type: heading
+  label: Products
 - type: directory
   path: src/products
   label: Products
   create: all
-  match: "**/*"
+  match: "**/*.md"
+- type: heading
+  label: Product Options
+- type: document
+  path: src/products/options/sizes.json
+  label: Sizes
 upload_dir: src/products/images
 public_path: "/src/products/images"
 front_matter_path: ''
