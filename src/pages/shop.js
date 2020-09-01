@@ -6,6 +6,7 @@ import Checkbox from '../components/checkbox/checkbox';
 import ProductItem from '../components/product-item/product-item';
 import productSelector from '../selectors/products';
 import { minPrice as _minPrice } from '../helpers/helpers';
+import styles from './styles/shop.module.css';
 import '../styles/react-tabs-custom.css';
 
 const Shop = ({ data }) => {
@@ -64,7 +65,7 @@ const Shop = ({ data }) => {
                 </Tabs>
             </div>
             <div className="content-container">
-                <div style={{ display: `grid`, gridTemplateColumns: `1fr 1fr`, gridGap: `1rem` }}>
+                <div className={styles.shop__productGrid}>
                     {filteredProducts.map(({ node: product }) => {
                         return (
                             <ProductItem
@@ -86,17 +87,17 @@ const Shop = ({ data }) => {
 
 const query = graphql`
   query {
-    sizes: allMarkdownRemark {
+    sizes: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}) {
         group(field: frontmatter___priceBySize___size___label) {
           size: fieldValue
         }
     }
-    varieties: allMarkdownRemark {
+    varieties: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}) {
         group(field: frontmatter___variety) {
           variety: fieldValue
         }
     }
-    products: allMarkdownRemark (sort: {order: ASC, fields: frontmatter___title}) {
+    products: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}, sort: {order: ASC, fields: frontmatter___title}) {
       edges {
         node {
           frontmatter {

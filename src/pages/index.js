@@ -9,6 +9,10 @@ const Home = ({ data }) => {
     return (
         <Layout>
             <div className={styles.home__cta}>
+                <div className={styles.home__ctaText}>
+                    <h2>Plants Are Like Muffins</h2>
+                    <p>But for your soul</p>
+                </div>
                 <Link
                     className={styles.home__ctaButton}
                     to="/shop">
@@ -18,23 +22,32 @@ const Home = ({ data }) => {
             <div className="content-container">
                 <h2 className="heading-first">Easy to grow</h2>
                 <div className={styles.home__contentGrid}>
-                    {data.allMarkdownRemark.edges.map(({ node }) => {
+                    {data.products.edges.map(({ node }) => {
                         return (
-                            <ProductItem 
+                            <ProductItem
                                 key={node.id}
                                 product={{
                                     slug: node.fields.slug,
                                     fluid: node.frontmatter.imageAbs.childImageSharp.fluid,
                                     title: node.frontmatter.title,
                                     minPrice: _minPrice(node.frontmatter.priceBySize)
-                            }} />
+                                }} />
                         )
                     })}
                 </div>
             </div>
             <div className="content-container">
-                <h2 className="heading-first">Muffins?</h2>
-                <p>No muffins are available for purchase, but we certainly like to eat muffins here. We deliver plants in the Greater Ottawa Area</p>
+                <div className={styles.home__about}>
+                    <div>
+                        <h2 className="heading-first">Muffins?</h2>
+                        <p>No muffins are available for purchase, but we certainly like to eat muffins here. We deliver plants in the Greater Ottawa Area</p>
+                    </div>
+                    <div className={styles.home__aboutAdditional}>
+                        <h3>About Muffin's Plants</h3>
+                        <div 
+                            dangerouslySetInnerHTML={{__html: data.about.edges[0].node.html}} />
+                    </div>
+                </div>
             </div>
 
         </Layout>
@@ -43,7 +56,7 @@ const Home = ({ data }) => {
 
 const query = graphql`
   query {
-  allMarkdownRemark(filter: {frontmatter: {feature: {eq: "Easy to grow"}}}, sort: {order: ASC, fields: frontmatter___title}) {
+  products: allMarkdownRemark(filter: {frontmatter: {feature: {eq: "Easy to grow"}}}, sort: {order: ASC, fields: frontmatter___title}) {
     edges {
       node {
         frontmatter {
@@ -65,6 +78,13 @@ const query = graphql`
         fields {
           slug
         }
+      }
+    }
+  }
+  about: allMarkdownRemark(filter: {frontmatter: {contentType: {eq: "page"}, page: {eq: "about"}}}) {
+    edges {
+      node {
+        html
       }
     }
   }

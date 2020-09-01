@@ -63,6 +63,7 @@
 .shoppingCart__cartItem {
     display: grid;
     grid-gap: 1rem;
+    gap: 1rem;
     grid-template-columns: repeat(2, 1fr);
     padding: 1rem 0;
 }
@@ -104,4 +105,15 @@
     color: var(--accentColor);
     font-size: 1rem;
     font-weight: 300;
+}
+
+.shoppingCart__closeCartButton {
+    background-color: transparent;
+    background-image: url('./images/close.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    float: right;
+    height: 48px;
+    width: 48px;
 }

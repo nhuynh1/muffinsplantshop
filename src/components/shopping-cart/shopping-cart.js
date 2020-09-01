@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Link } from 'gatsby';
 import Modal from 'react-modal';
 import numeral from 'numeral';
 import { CartContext } from '../../../wrap-with-provider';
@@ -113,10 +112,14 @@ const CartItem = ({ product }) => {
     )
 }
 
-const Cart = () => {
+const Cart = ({ toggleCart }) => {
     const { cart } = useContext(CartContext);
     return (
-        <>
+        <div style={{ padding: `1rem` }}>
+            <button
+                aria-label="close cart"
+                className={styles.shoppingCart__closeCartButton}
+                onClick={toggleCart}></button>
             <h1 className="heading-first">Cart ({cartQuantityTotal(cart)})</h1>
             {cart.length > 0 ? (<div>
                 {cart.map((product, index) => {
@@ -134,26 +137,34 @@ const Cart = () => {
                         <span>{numeral(cartAmountTotal(cart)).format('$0,0.00')}</span>
                     </p>
                     <CheckoutCart />
-                    <Link className="link-with-arrow" to="/shop">Continue shopping</Link>
+                    <div>
+                        <button
+                            className="link-with-arrow"
+                            onClick={toggleCart}>Continue shopping</button>
+                    </div>
                 </div>
             </div>) : (
                     <div>
                         <p>Cart is empty</p>
-                        <Link className="link-with-arrow" to="/shop">Continue shopping</Link>
+                        <div>
+                            <button
+                                className="link-with-arrow"
+                                onClick={toggleCart}>Continue shopping</button>
+                        </div>
                     </div>
                 )}
-        </>
+        </div>
     )
 }
 
-const CartButton = () => {
+const CartButton = ({ toggleCart }) => {
     const { cart } = useContext(CartContext);
     return (
-        <Link
+        <button
             className={styles.shoppingCart__cartButton}
-            to="/cart">
+            onClick={toggleCart}>
             Cart ({cartQuantityTotal(cart)})
-        </Link>
+        </button>
     )
 }
 
@@ -178,7 +189,7 @@ const CheckoutCart = () => {
                 Check out
             </button>
             <Modal
-                appElement={document.querySelector('#cart')}
+                appElement={document.querySelector('#root')}
                 contentLabel="Checkout Cart Simulation"
                 isOpen={isCheckingOut}
                 onRequestClose={() => setIsCheckingOut(false)}>

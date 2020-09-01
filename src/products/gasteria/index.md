@@ -1,4 +1,5 @@
 ---
+contentType: "product"
 title: Gasteria
 image: ../images/gasteria.jpg
 imageAbs: /src/products/images/gasteria.jpg

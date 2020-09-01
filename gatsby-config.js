@@ -18,6 +18,12 @@ module.exports = {
         path: `${__dirname}/src/products`
       }
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content`
+      }
+    },
     `gatsby-transformer-remark`,
     `gatsby-transformer-json`,
     {

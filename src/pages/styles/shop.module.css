@@ -1,0 +1,12 @@
+.shop__productGrid {
+    display: grid;
+    grid-gap: 1rem;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media screen and (min-width: 1000px) {
+    .shop__productGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

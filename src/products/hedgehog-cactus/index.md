@@ -1,4 +1,5 @@
 ---
+contentType: "product"
 title: Hedgehog Cactus
 image: ../images/hedgehog-cactus.jpg
 imageAbs: /src/products/images/hedgehog-cactus.jpg

@@ -1,4 +1,5 @@
 ---
+contentType: "product"
 title: Aloe Vera
 image: "../images/aloe-vera.jpg"
 imageAbs: "/src/products/images/aloe-vera.jpg"

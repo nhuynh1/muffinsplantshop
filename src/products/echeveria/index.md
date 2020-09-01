@@ -1,4 +1,5 @@
 ---
+contentType: "product"
 title: Echeveria
 image: ../images/echeveria.jpg
 imageAbs: /src/products/images/echeveria.jpg
