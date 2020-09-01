@@ -4,14 +4,18 @@ import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 
 const About = ({ data }) => {
-    return (
-        <Layout>
-            <SEO title="About" />
-            <div
-                className="content-container"
-                dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
-        </Layout>
-    )
+  return (
+    <Layout>
+      <SEO title="About" />
+      <div style={{ display: `flex`, flexDirection: `column`, height: `50vh`, padding: `1rem` }}>
+        <div style={{ flex: `1` }}>
+          <div
+            className="content-container"
+            dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
+        </div>
+      </div>
+    </Layout>
+  )
 }
 
 const query = graphql`

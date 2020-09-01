@@ -89,11 +89,6 @@ const Shop = ({ data }) => {
 
 const query = graphql`
   query {
-    sizes: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}) {
-        group(field: frontmatter___priceBySize___size___label) {
-          size: fieldValue
-        }
-    }
     varieties: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}) {
         group(field: frontmatter___variety) {
           variety: fieldValue
@@ -126,6 +121,11 @@ const query = graphql`
           }
         }
       }
+    }
+    sizes: allMarkdownRemark (filter: {frontmatter: {contentType: {eq: "product"}}}) {
+        group(field: frontmatter___priceBySize___size___label) {
+          size: fieldValue
+        }
     }
   }
 `

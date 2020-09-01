@@ -4,12 +4,17 @@ import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 
 const DeliveryInfo = ({ data }) => {
+  console.log(data);
   return (
     <Layout>
       <SEO title="Delivery Information" />
-      <div
-        className="content-container"
-        dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
+      <div style={{ display: `flex`, flexDirection: `column`, height: `50vh`, padding: `1rem` }}>
+        <div style={{ flex: `1` }}>
+          <div
+            className="content-container"
+            dangerouslySetInnerHTML={{ __html: data.pages.edges[0].node.html }} />
+        </div>
+      </div>
     </Layout>
   )
 }
