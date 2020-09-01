@@ -74,7 +74,7 @@ const Layout = ({ children }) => {
                     <p>{data.site.siteMetadata.title} {(new Date()).getFullYear()}</p>
                 </footer>
             </div>
-            {isOpenCart && (<div style={{ backgroundColor: `white`, position: `absolute`, top: 0, right: 0, width: `100%`, maxWidth: 400, height: `100vh`, boxShadow: `-4px 0px 2px 0px rgba(0,0,0, 0.12)` }}>
+            {isOpenCart && (<div style={{ backgroundColor: `white`, position: `absolute`, top: 0, right: 0, width: `100%`, maxWidth: 400, height: `100vh`, boxShadow: `-4px 0px 2px 0px rgba(0,0,0, 0.12)`, overflowY: `auto` }}>
                 <Cart toggleCart={() => setIsOpenCart(!isOpenCart)} />
             </div>)}
         </div>
