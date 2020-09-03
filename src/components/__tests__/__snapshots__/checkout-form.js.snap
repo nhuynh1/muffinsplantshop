@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckoutForm renders properly 1`] = `
+<div>
+  <div
+    className="checkoutForm__section current"
+  >
+    <h2>
+      1. Shipping
+    </h2>
+  </div>
+  <ShippingForm
+    setSection={[Function]}
+    setValues={[Function]}
+  />
+  <div
+    className="checkoutForm__section "
+  >
+    <h2>
+      2. Billing
+    </h2>
+  </div>
+  <div
+    className="checkoutForm__section "
+  >
+    <h2>
+      3. Payment
+    </h2>
+  </div>
+</div>
+`;

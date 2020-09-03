@@ -6,12 +6,21 @@
 }
 
 .checkoutForm__section {
+    align-items: center;
     background-color: #F8F8F7;
     color: rgba(0,0,0, 0.85);
+    display: flex;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
+    justify-content: space-between;
+    margin: 1rem 0;
     padding: 1rem;
     text-transform: uppercase;
+}
+
+.checkoutForm__section h2 {
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
 }
 
 .checkoutForm__section.current {
@@ -41,6 +50,10 @@
     margin: 0.5rem 0;
 }
 
+.checkoutForm__details {
+    padding: 0rem 1rem;
+}
+
 .checkoutForm__submitButton {
     background-color: var(--accentColor);
     border: none;
@@ -50,4 +63,42 @@
     margin: 2rem 0;
     padding: 1rem;
     text-transform: uppercase;
+    width: 100%;
+}
+
+.checkoutForm__editButton {
+    background: none;
+    border: none;
+    font-size: 1rem;
+}
+
+.checkoutForm__editButton:hover {
+    text-decoration: underline;
+}
+
+.checkoutForm__shippingOption {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden; 
+}
+
+.checkoutForm__shippingOption + label {
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.65);
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+.checkoutForm__shippingOption:checked + label {
+    box-shadow: 0 0 0 2px currentColor;
+    color: var(--accentColor);
+}
+
+.checkoutForm__error {
+    color: red;
 }

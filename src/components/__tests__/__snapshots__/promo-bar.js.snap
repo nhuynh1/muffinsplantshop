@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render PromoBar correctly 1`] = `
+<div
+  className="promobar"
+>
+  <p
+    className="promobar__text"
+  >
+    Free delivery in Downtown Ottawa
+  </p>
+</div>
+`;
