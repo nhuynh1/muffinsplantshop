@@ -1,7 +1,9 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useContext } from 'react';
 import CartReducer from './src/reducers/cart';
 
-export const CartContext = React.createContext();
+const CartContext = React.createContext();
+
+export const useCartContext = () => useContext(CartContext);
 
 const CartProvider = ({ children }) => {
     const cartFromStorage = typeof localStorage !== `undefined` ? 
@@ -20,8 +22,10 @@ const CartProvider = ({ children }) => {
     )
 }
 
-export default ({ element }) => (
+export const CartProviderWrapper = ({ element }) => (
     <CartProvider>
         {element}
     </CartProvider>
 );
+
+export default CartContext;

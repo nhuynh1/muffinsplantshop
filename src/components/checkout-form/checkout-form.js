@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import numeral from 'numeral';
-import { CartContext } from '../../../wrap-with-provider';
+import { useCartContext } from '../../../wrap-with-provider';
 import { cartQuantityTotal, cartAmountTotal } from '../../selectors/cartQuantity';
 import styles from './checkout-form.module.css';
 
@@ -20,7 +20,7 @@ const baseSchema = Yup.object({
 });
 
 
-const ShippingForm = ({ setValues, setSection, shippingValues }) => {
+export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
     const initialValues = {
         firstName: shippingValues ? shippingValues.firstName : "",
         lastName: shippingValues ? shippingValues.lastName : "",
@@ -318,9 +318,10 @@ const CheckoutForm = () => {
     const [billingValues, setBillingValues] = useState();
     const [sameAsShipping, setSameAsShipping] = useState(true);
     const haveBillingInfo = billingValues || (sameAsShipping && shippingValues);
-    const { cart } = useContext(CartContext);
+    const { cart } = useCartContext();
     const cartQuantity = cartQuantityTotal(cart);
     const cartTotal = cartAmountTotal(cart)
+    
     return (
         <div>
             <div>
