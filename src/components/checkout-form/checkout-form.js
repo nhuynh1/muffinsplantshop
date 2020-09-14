@@ -54,10 +54,12 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
         <div>
             <form
                 className={styles.checkoutForm__form}
+                data-testid="shipping-form"
                 onSubmit={handleSubmit}>
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="firstName">First Name<span className="required">*</span></label>
                     <input
+                        id="firstName"
                         name="firstName"
                         onChange={handleChange}
                         type="text"
@@ -67,6 +69,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="lastName">Last Name<span className="required">*</span></label>
                     <input
+                        id="lastName"
                         name="lastName"
                         onChange={handleChange}
                         type="text"
@@ -76,6 +79,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="addressOne">Address Line 1<span className="required">*</span></label>
                     <input
+                        id="addressOne"
                         name="addressOne"
                         onChange={handleChange}
                         type="text"
@@ -85,6 +89,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="addressTwo">Address Line 2</label>
                     <input
+                        id="addressTwo"
                         name="addressTwo"
                         onChange={handleChange}
                         type="text"
@@ -94,6 +99,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="municipality">Municipality<span className="required">*</span></label>
                     <input
+                        id="municipality"
                         name="municipality"
                         onChange={handleChange}
                         type="text"
@@ -103,6 +109,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="provinceTerritory">Province/Territory<span className="required">*</span></label>
                     <input
+                        id="provinceTerritory"
                         name="provinceTerritory"
                         onChange={handleChange}
                         type="text"
@@ -112,6 +119,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="postalCode">Postal Code<span className="required">*</span></label>
                     <input
+                        id="postalCode"
                         name="postalCode"
                         onChange={handleChange}
                         type="text"
@@ -146,6 +154,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="phone">Phone Number<span className="required">*</span></label>
                     <input
+                        id="phone"
                         name="phone"
                         onChange={handleChange}
                         type="text"
@@ -155,6 +164,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="email">Email<span className="required">*</span></label>
                     <input
+                        id="email"
                         name="email"
                         onChange={handleChange}
                         type="text"
@@ -163,6 +173,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 </div>
                 <button
                     className={styles.checkoutForm__submitButton}
+                    data-testid="submit-shipping-button"
                     type="submit">continue to billing</button>
             </form>
         </div>
@@ -229,10 +240,12 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                 </div>) :
                 (<form
                     className={styles.checkoutForm__form}
+                    data-testid="billing-form"
                     onSubmit={handleSubmit}>
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="firstName">First Name<span className="required">*</span></label>
                         <input
+                            id="firstName"
                             name="firstName"
                             onChange={handleChange}
                             type="text"

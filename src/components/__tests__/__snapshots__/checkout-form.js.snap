@@ -6,30 +6,273 @@ exports[`CheckoutForm renders properly 1`] = `
     <p>
       1
        item
+      
        
       $12.95
     </p>
   </div>
   <div
-    className="checkoutForm__section current"
+    class="checkoutForm__section current"
   >
     <h2>
       1. Shipping
     </h2>
   </div>
-  <ShippingForm
-    setSection={[Function]}
-    setValues={[Function]}
-  />
+  <div>
+    <form
+      class="checkoutForm__form"
+      data-testid="shipping-form"
+    >
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="firstName"
+        >
+          First Name
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="firstName"
+          name="firstName"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="lastName"
+        >
+          Last Name
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="lastName"
+          name="lastName"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="addressOne"
+        >
+          Address Line 1
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="addressOne"
+          name="addressOne"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="addressTwo"
+        >
+          Address Line 2
+        </label>
+        <input
+          id="addressTwo"
+          name="addressTwo"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="municipality"
+        >
+          Municipality
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="municipality"
+          name="municipality"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="provinceTerritory"
+        >
+          Province/Territory
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="provinceTerritory"
+          name="provinceTerritory"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="postalCode"
+        >
+          Postal Code
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="postalCode"
+          name="postalCode"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <h3>
+        Shipping Method
+      </h3>
+      <div>
+        <input
+          checked=""
+          class="checkoutForm__shippingOption"
+          id="standard"
+          name="shipping"
+          type="radio"
+          value="standard"
+        />
+        <label
+          for="standard"
+        >
+          Standard
+        </label>
+        <input
+          class="checkoutForm__shippingOption"
+          id="express"
+          name="shipping"
+          type="radio"
+          value="express"
+        />
+        <label
+          for="express"
+        >
+          Express
+        </label>
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="phone"
+        >
+          Phone Number
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <div
+        class="checkoutForm__field"
+      >
+        <label
+          for="email"
+        >
+          Email
+          <span
+            class="required"
+          >
+            *
+          </span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="text"
+          value=""
+        />
+        <span
+          class="checkoutForm__error"
+        />
+      </div>
+      <button
+        class="checkoutForm__submitButton"
+        data-testid="submit-shipping-button"
+        type="submit"
+      >
+        continue to billing
+      </button>
+    </form>
+  </div>
   <div
-    className="checkoutForm__section "
+    class="checkoutForm__section "
   >
     <h2>
       2. Billing
     </h2>
   </div>
   <div
-    className="checkoutForm__section "
+    class="checkoutForm__section "
   >
     <h2>
       3. Payment
@@ -41,163 +284,163 @@ exports[`CheckoutForm renders properly 1`] = `
 exports[`ShippingForm renders properly 1`] = `
 <div>
   <form
-    className="checkoutForm__form"
-    onSubmit={[Function]}
+    class="checkoutForm__form"
+    data-testid="shipping-form"
   >
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="firstName"
+        for="firstName"
       >
         First Name
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="firstName"
         name="firstName"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="lastName"
+        for="lastName"
       >
         Last Name
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="lastName"
         name="lastName"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="addressOne"
+        for="addressOne"
       >
         Address Line 1
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="addressOne"
         name="addressOne"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="addressTwo"
+        for="addressTwo"
       >
         Address Line 2
       </label>
       <input
+        id="addressTwo"
         name="addressTwo"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="municipality"
+        for="municipality"
       >
         Municipality
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="municipality"
         name="municipality"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="provinceTerritory"
+        for="provinceTerritory"
       >
         Province/Territory
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="provinceTerritory"
         name="provinceTerritory"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="postalCode"
+        for="postalCode"
       >
         Postal Code
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="postalCode"
         name="postalCode"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <h3>
@@ -205,82 +448,80 @@ exports[`ShippingForm renders properly 1`] = `
     </h3>
     <div>
       <input
-        checked={true}
-        className="checkoutForm__shippingOption"
+        checked=""
+        class="checkoutForm__shippingOption"
         id="standard"
         name="shipping"
-        onChange={[Function]}
         type="radio"
         value="standard"
       />
       <label
-        htmlFor="standard"
+        for="standard"
       >
         Standard
       </label>
       <input
-        checked={false}
-        className="checkoutForm__shippingOption"
+        class="checkoutForm__shippingOption"
         id="express"
         name="shipping"
-        onChange={[Function]}
         type="radio"
         value="express"
       />
       <label
-        htmlFor="express"
+        for="express"
       >
         Express
       </label>
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="phone"
+        for="phone"
       >
         Phone Number
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="phone"
         name="phone"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <div
-      className="checkoutForm__field"
+      class="checkoutForm__field"
     >
       <label
-        htmlFor="email"
+        for="email"
       >
         Email
         <span
-          className="required"
+          class="required"
         >
           *
         </span>
       </label>
       <input
+        id="email"
         name="email"
-        onChange={[Function]}
         type="text"
         value=""
       />
       <span
-        className="checkoutForm__error"
+        class="checkoutForm__error"
       />
     </div>
     <button
-      className="checkoutForm__submitButton"
+      class="checkoutForm__submitButton"
+      data-testid="submit-shipping-button"
       type="submit"
     >
       continue to billing

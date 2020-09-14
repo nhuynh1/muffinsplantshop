@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import numeral from 'numeral';
-import { CartContext } from '../../../wrap-with-provider';
+import CartContext from '../../../wrap-with-provider';
 import { cartQuantityTotal, cartAmountTotal } from '../../selectors/cartQuantity';
 import styles from './shopping-cart.module.css';
 
