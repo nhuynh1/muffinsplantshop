@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'gatsby';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import numeral from 'numeral';
@@ -190,6 +191,7 @@ const Details = ({ values, section }) => {
         provinceTerritory,
         postalCode,
         phone,
+        email,
         shipping } = values;
     return (
         <div className={styles.checkoutForm__details}>
@@ -198,12 +200,14 @@ const Details = ({ values, section }) => {
             <p>{addressTwo}</p>
             <p>{municipality}, {provinceTerritory}, {postalCode}</p>
             {section === 'shipping' && <p>{shipping} shipping</p>}
-            <p>{phone}</p>
+            {section === 'shipping' && <p>{phone}</p>}
+            <p></p>
+            {section === 'shipping' && <p>{email}</p>}
         </div>
     );
 }
 
-const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, setSameAsShipping, billingValues }) => {
+export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, setSameAsShipping, billingValues }) => {
     const { handleSubmit, handleChange, values, errors } = useFormik({
         initialValues: {
             firstName: billingValues ? billingValues.firstName : "",
@@ -235,6 +239,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <Details values={shippingValues} section="billing" />
                     <button
                         className={styles.checkoutForm__submitButton}
+                        data-testid="submit-billing-button"
                         onClick={() => setSection('payment')}
                         type="button">continue to payment</button>
                 </div>) :
@@ -255,6 +260,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="lastName">Last Name<span className="required">*</span></label>
                         <input
+                            id="lastName"
                             name="lastName"
                             onChange={handleChange}
                             type="text"
@@ -264,6 +270,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="addressOne">Address Line 1<span className="required">*</span></label>
                         <input
+                            id="addressOne"
                             name="addressOne"
                             onChange={handleChange}
                             type="text"
@@ -273,6 +280,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="addressTwo">Address Line 2</label>
                         <input
+                            id="addressTwo"
                             name="addressTwo"
                             onChange={handleChange}
                             type="text"
@@ -282,6 +290,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="municipality">Municipality<span className="required">*</span></label>
                         <input
+                            id="municipality"
                             name="municipality"
                             onChange={handleChange}
                             type="text"
@@ -291,6 +300,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="provinceTerritory">Province/Territory<span className="required">*</span></label>
                         <input
+                            id="provinceTerritory"
                             name="provinceTerritory"
                             onChange={handleChange}
                             type="text"
@@ -300,6 +310,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="postalCode">Postal Code<span className="required">*</span></label>
                         <input
+                            id="postalCode"
                             name="postalCode"
                             onChange={handleChange}
                             type="text"
@@ -308,6 +319,7 @@ const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, se
                     </div>
                     <button
                         className={styles.checkoutForm__submitButton}
+                        data-testid="submit-billing-button"
                         type="submit">continue to payment</button>
                 </form>)}
         </div>
@@ -325,21 +337,68 @@ const EditButton = ({ setSection, section }) => {
     );
 }
 
+const CheckoutSummary = ({ shippingValues }) => {
+    const tempShippingDict = {
+        standard: 10.00,
+        express: 17.00
+    };
+
+    const { cart } = useCartContext();
+    const [showItems, setShowItems] = useState(false);
+
+    const cartQuantity = cartQuantityTotal(cart);
+    const cartTotal = cartAmountTotal(cart);
+    const cartShippingTotal = shippingValues ? (cartTotal + tempShippingDict[shippingValues.shipping]) * 1.13 : cartTotal;
+
+    const cartQuantityFormatted = `${cartQuantity} item${cartQuantity > 1 ? 's' : ''}`;
+    const cartTotalFormatted = numeral(cartShippingTotal).format('$0,0.00');
+
+
+    const summaryText = `${cartQuantityFormatted} ${!showItems ? (`${cartTotalFormatted} ${!shippingValues ? '+ tax and shipping' : ''}`) : ''}`
+
+
+
+    return (
+        <div style={{ padding: `0 1rem` }}>
+            <h2 className="heading-first">Checkout</h2>
+            <button
+                onClick={() => setShowItems(!showItems)}
+                type="button">
+                &#9654;
+            </button>
+            <p>{summaryText}</p>
+            
+            {showItems && (<>
+                {cart.map(product => (
+                    <div key={product.sku}>
+                        <img
+                            alt=""
+                            src={product.imageSrc} />
+                        <p>{product.title} - {product.size}</p>
+                        <p>Qty: {product.quantity}</p>
+                        <p>{product.price}</p>
+                    </div>
+                ))}
+                <p>Subtotal {numeral(cartTotal).format('$0,0.00')}</p>
+                <p>Shipping {shippingValues ? numeral(tempShippingDict[shippingValues.shipping]).format('$0,0.00') : '--'}</p>
+                <p>Taxes {shippingValues ? numeral((cartTotal + tempShippingDict[shippingValues.shipping]) * 0.13).format('$0,0.00') : '--'}</p>
+                <p>{shippingValues ? `Total ${numeral((cartTotal + tempShippingDict[shippingValues.shipping]) * 1.13).format('$0,0.00')}` : `Complete and submit shipping information for tax and shipping amounts`}</p>
+            </>)}
+        </div>
+    )
+}
+
 const CheckoutForm = () => {
     const [section, setSection] = useState('shipping');
     const [shippingValues, setShippingValues] = useState();
     const [billingValues, setBillingValues] = useState();
     const [sameAsShipping, setSameAsShipping] = useState(true);
     const haveBillingInfo = billingValues || (sameAsShipping && shippingValues);
-    const { cart } = useCartContext();
-    const cartQuantity = cartQuantityTotal(cart);
-    const cartTotal = cartAmountTotal(cart)
-    
+
     return (
         <div>
-            <div>
-                <p>{cartQuantity} item{`${cartQuantity > 1 ? 's' : ''}`} {numeral(cartTotal).format('$0,0.00')}</p>
-            </div>
+            <CheckoutSummary shippingValues={shippingValues} />
+
             <div className={`${styles.checkoutForm__section} ${section === 'shipping' ? styles.current : ''}`}>
                 <h2>1. Shipping</h2>
                 {shippingValues && section !== 'shipping' && <EditButton setSection={setSection} section="shipping" />}
@@ -366,10 +425,23 @@ const CheckoutForm = () => {
             <div className={`${styles.checkoutForm__section} ${section === 'payment' ? styles.current : ''}`}>
                 <h2>3. Payment</h2>
             </div>
-            {
-                section === 'payment' && <p>Payment is not available in this demo</p>
-            }
-
+            <div className={styles.checkoutForm__sectionBody}>
+                {section === 'payment' &&
+                    (<>
+                        <span>Payment is not available in this demo</span>
+                        <Link
+                            className={styles.checkoutForm__submitButton}
+                            style={{ display: `block` }}
+                            to="/shop">
+                            Go back to the shop
+                        </Link>
+                    </>)
+                }
+            </div>
+            <div>
+                <h3>Contact Info</h3>
+                <p>Email a question; expect to hear back in 24 hours: contact@muffinplants.com</p>
+            </div>
         </div>)
 }
 

@@ -102,3 +102,7 @@
 .checkoutForm__error {
     color: red;
 }
+
+.checkoutForm__sectionBody {
+    padding: 1rem;
+}

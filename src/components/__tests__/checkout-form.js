@@ -17,6 +17,15 @@ const shippingValues = {
     shipping: "standard"
 }
 
+const billingValues = {
+    firstName: "Patty",
+    lastName: "Pears",
+    addressOne: "2 First Street",
+    municipality: "Montreal",
+    provinceTerritory: "QC",
+    postalCode: "H1A 0A1"
+}
+
 afterEach(cleanup);
 
 test('CheckoutForm renders with cart details', () => {
@@ -36,11 +45,16 @@ test('CheckoutForm renders with cart details', () => {
         .mockImplementation(() => contextValues);
     const { container } = render(<CheckoutForm />);
     expect(container.firstChild).toMatchSnapshot();
-    expect(screen.getByText("1 item $12.95")).toBeInTheDocument();
+    expect(screen.getByText("1 item $12.95 + tax and shipping")).toBeInTheDocument();
 });
 
 test('ShippingForm renders properly', () => {
     const { container } = render(<ShippingForm />);
+    expect(container.firstChild).toMatchSnapshot();
+})
+
+test('BillingForm renders properly', () => {
+    const { container } = render(<BillingForm />);
     expect(container.firstChild).toMatchSnapshot();
 })
 
@@ -60,39 +74,152 @@ test('Updates current section and values when submitting valid data with Shippin
     });
 })
 
-test('Shows shipping details with valid form submission', async () => {
-    render(<CheckoutForm />);
+describe('Shows shipping and billing details with valid form submission', () => {
+    test('where shipping and billing details are the same', async () => {
+        render(<CheckoutForm />);
 
-    fireEvent.change(screen.getByLabelText(/first/i), { target: { value: shippingValues.firstName } });
-    fireEvent.change(screen.getByLabelText(/last/i), { target: { value: shippingValues.lastName } });
-    fireEvent.change(screen.getByLabelText(/address.+(1|one)/i), { target: { value: shippingValues.addressOne } });
-    fireEvent.change(screen.getByLabelText(/municipality/i), { target: { value: shippingValues.municipality } });
-    fireEvent.change(screen.getByLabelText(/province/i), { target: { value: shippingValues.provinceTerritory } });
-    fireEvent.change(screen.getByLabelText(/code/i), { target: { value: shippingValues.postalCode } });
-    fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: shippingValues.phone } });
-    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: shippingValues.email } });
+        fireEvent.change(screen.getByLabelText(/first/i), { target: { value: shippingValues.firstName } });
+        fireEvent.change(screen.getByLabelText(/last/i), { target: { value: shippingValues.lastName } });
+        fireEvent.change(screen.getByLabelText(/address.+(1|one)/i), { target: { value: shippingValues.addressOne } });
+        fireEvent.change(screen.getByLabelText(/municipality/i), { target: { value: shippingValues.municipality } });
+        fireEvent.change(screen.getByLabelText(/province/i), { target: { value: shippingValues.provinceTerritory } });
+        fireEvent.change(screen.getByLabelText(/code/i), { target: { value: shippingValues.postalCode } });
+        fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: shippingValues.phone } });
+        fireEvent.change(screen.getByLabelText(/email/i), { target: { value: shippingValues.email } });
 
-    await waitFor(() => {
-        const submit = screen.getByTestId("submit-shipping-button");
-        fireEvent.click(submit);
+        await waitFor(() => {
+            const submit = screen.getByTestId("submit-shipping-button");
+            fireEvent.click(submit);
+        })
+
+        Object.entries(shippingValues).forEach(([key, value]) => {
+            const regex = new RegExp(value);
+            if(['email', 'shipping', 'phone'].includes(key)) {
+                expect(screen.queryByText(regex)).toBeInTheDocument();
+            } else {
+                expect(screen.getAllByText(regex).length).toEqual(2);
+            }
+        });
+
+        await waitFor(() => {
+            const submit = screen.getByTestId("submit-billing-button");
+            fireEvent.click(submit);
+        })
+
+        expect(screen.queryByText("Payment is not available in this demo")).toBeInTheDocument();
     })
 
-    Object.entries(shippingValues).forEach(([key, value]) => {
-        const regex = new RegExp(value);
-        switch (key) {
-            case 'email':
-                expect(screen.queryByText(regex)).not.toBeInTheDocument();
-                break;
-            case 'shipping':
-                expect(screen.queryByText(regex)).toBeInTheDocument();
-                break;
-            default:
-                expect(screen.getAllByText(regex).length).toEqual(2);
-                break;
-        }
-    });
-    const toggleSameAddress = screen.getByLabelText(/My billing address is the same/i);
-    fireEvent.click(toggleSameAddress);
-    expect(screen.getByTestId("billing-form")).toBeInTheDocument();
+    test('where shipping and billing details are different', async () => {
+        render(<CheckoutForm />);
 
+        fireEvent.change(screen.getByLabelText(/first/i), { target: { value: shippingValues.firstName } });
+        fireEvent.change(screen.getByLabelText(/last/i), { target: { value: shippingValues.lastName } });
+        fireEvent.change(screen.getByLabelText(/address.+(1|one)/i), { target: { value: shippingValues.addressOne } });
+        fireEvent.change(screen.getByLabelText(/municipality/i), { target: { value: shippingValues.municipality } });
+        fireEvent.change(screen.getByLabelText(/province/i), { target: { value: shippingValues.provinceTerritory } });
+        fireEvent.change(screen.getByLabelText(/code/i), { target: { value: shippingValues.postalCode } });
+        fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: shippingValues.phone } });
+        fireEvent.change(screen.getByLabelText(/email/i), { target: { value: shippingValues.email } });
+
+        await waitFor(() => {
+            const submit = screen.getByTestId("submit-shipping-button");
+            fireEvent.click(submit);
+        })
+
+        const toggleSameAddress = await screen.findByLabelText(/My billing address is the same/i);
+        fireEvent.click(toggleSameAddress);
+
+        fireEvent.change(screen.getByLabelText(/first/i), { target: { value: billingValues.firstName } });
+        fireEvent.change(screen.getByLabelText(/last/i), { target: { value: billingValues.lastName } });
+        fireEvent.change(screen.getByLabelText(/address.+(1|one)/i), { target: { value: billingValues.addressOne } });
+        fireEvent.change(screen.getByLabelText(/municipality/i), { target: { value: billingValues.municipality } });
+        fireEvent.change(screen.getByLabelText(/province/i), { target: { value: billingValues.provinceTerritory } });
+        fireEvent.change(screen.getByLabelText(/code/i), { target: { value: billingValues.postalCode } });
+
+        await waitFor(() => {
+            const submit = screen.getByTestId("submit-billing-button");
+            fireEvent.click(submit);
+        })
+
+        Object.entries(shippingValues).forEach(([, value]) => {
+            const regex = new RegExp(value);
+            expect(screen.getByText(regex)).toBeInTheDocument();
+        });
+
+        Object.entries(billingValues).forEach(([, value]) => {
+            const regex = new RegExp(value);
+            expect(screen.getByText(regex)).toBeInTheDocument();
+        })
+    })
+})
+
+describe('BillingForm billing same as shipping toggle', () => {
+    test('is on', () => {
+        const billingSameValues = { ...shippingValues };
+        delete billingSameValues.shipping;
+        delete billingSameValues.email;
+        delete billingSameValues.phone;
+
+        render(<BillingForm
+            shippingValues={shippingValues}
+            sameAsShipping={true} />);
+
+        expect(screen.queryByTestId("billing-form")).not.toBeInTheDocument();
+
+        Object.entries(billingSameValues).forEach(([, value]) => {
+            const regex = new RegExp(value);
+            expect(screen.queryByText(regex)).toBeInTheDocument();
+        })
+    });
+
+    test('is switched to off', () => {
+        const setSameAsShipping = jest.fn();
+        render(<BillingForm
+            shippingValues={shippingValues}
+            sameAsShipping={true}
+            setSameAsShipping={setSameAsShipping} />);
+
+        const toggleSameAddress = screen.getByLabelText(/My billing address is the same/i);
+        fireEvent.click(toggleSameAddress);
+        expect(setSameAsShipping).toBeCalledWith(false);
+    })
+
+    test('is off', () => {
+        render(<BillingForm
+            billingValues={billingValues}
+            shippingValues={shippingValues}
+            sameAsShipping={false} />);
+        expect(screen.getByTestId("billing-form")).toBeInTheDocument();
+        Object.entries(billingValues).forEach(([, value]) => {
+            const regex = new RegExp(value);
+            expect(screen.queryByText(regex)).not.toBeInTheDocument();
+            expect(screen.getByDisplayValue(value)).toBeInTheDocument();
+        })
+    })
+})
+
+test('ShippingForm cannot be submitted empty', async () => {
+    render(<ShippingForm />);
+
+    const submit = screen.getByTestId("submit-shipping-button");
+    fireEvent.click(submit);
+
+    const shippingForm = await screen.findByTestId("shipping-form");
+    expect(shippingForm).toBeInTheDocument();
+
+    const requiredTexts = await screen.findAllByText(/required/i);
+    expect(requiredTexts.length).toBeGreaterThan(0);
+})
+
+test('BillingForm cannot be submmitted empty', async () => {
+    render(<BillingForm sameAsShipping={false} />);
+
+    const submit = screen.getByTestId("submit-billing-button");
+    fireEvent.click(submit);
+
+    const billingForm = await screen.findByTestId("billing-form");
+    expect(billingForm).toBeInTheDocument();
+
+    const requiredTexts = await screen.findAllByText(/required/i);
+    expect(requiredTexts.length).toBeGreaterThan(0);
 })

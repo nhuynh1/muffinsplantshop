@@ -1,14 +1,205 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckoutForm renders properly 1`] = `
+exports[`BillingForm renders properly 1`] = `
 <div>
-  <div>
+  <input
+    id="sameAsShipping"
+    name="sameAsShipping"
+    type="checkbox"
+  />
+  <label
+    for="sameAsShipping"
+  >
+    My billing address is the same as my shipping address
+  </label>
+  <form
+    class="checkoutForm__form"
+    data-testid="billing-form"
+  >
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="firstName"
+      >
+        First Name
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="firstName"
+        name="firstName"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="lastName"
+      >
+        Last Name
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="lastName"
+        name="lastName"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="addressOne"
+      >
+        Address Line 1
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="addressOne"
+        name="addressOne"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="addressTwo"
+      >
+        Address Line 2
+      </label>
+      <input
+        id="addressTwo"
+        name="addressTwo"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="municipality"
+      >
+        Municipality
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="municipality"
+        name="municipality"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="provinceTerritory"
+      >
+        Province/Territory
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="provinceTerritory"
+        name="provinceTerritory"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <div
+      class="checkoutForm__field"
+    >
+      <label
+        for="postalCode"
+      >
+        Postal Code
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="postalCode"
+        name="postalCode"
+        type="text"
+        value=""
+      />
+      <span
+        class="checkoutForm__error"
+      />
+    </div>
+    <button
+      class="checkoutForm__submitButton"
+      data-testid="submit-billing-button"
+      type="submit"
+    >
+      continue to payment
+    </button>
+  </form>
+</div>
+`;
+
+exports[`CheckoutForm renders with cart details 1`] = `
+<div>
+  <div
+    style="padding: 0px 1rem;"
+  >
+    <h2
+      class="heading-first"
+    >
+      Checkout
+    </h2>
+    <button
+      type="button"
+    >
+      ▶
+    </button>
     <p>
-      1
-       item
-      
-       
-      $12.95
+      1 item $12.95 + tax and shipping
     </p>
   </div>
   <div
@@ -277,6 +468,17 @@ exports[`CheckoutForm renders properly 1`] = `
     <h2>
       3. Payment
     </h2>
+  </div>
+  <div
+    class="checkoutForm__sectionBody"
+  />
+  <div>
+    <h3>
+      Contact Info
+    </h3>
+    <p>
+      Email a question; expect to hear back in 24 hours: contact@muffinplants.com
+    </p>
   </div>
 </div>
 `;
