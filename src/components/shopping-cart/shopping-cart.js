@@ -1,12 +1,12 @@
-import React, { useContext, useRef, useState } from 'react';
-import Modal from 'react-modal';
+import React, { useRef } from 'react';
+import { Link } from 'gatsby';
 import numeral from 'numeral';
-import CartContext from '../../../wrap-with-provider';
+import { useCartContext } from '../../../wrap-with-provider';
 import { cartQuantityTotal, cartAmountTotal } from '../../selectors/cartQuantity';
 import styles from './shopping-cart.module.css';
 
 const AddToCart = ({ title, price, sku, size, imageSrc }) => {
-    const { cartDispatch } = useContext(CartContext);
+    const { cartDispatch } = useCartContext();
     const notification = useRef(null);
 
     const add = () => {
@@ -39,7 +39,7 @@ const AddToCart = ({ title, price, sku, size, imageSrc }) => {
 }
 
 const CartItem = ({ product }) => {
-    const { cartDispatch } = useContext(CartContext);
+    const { cartDispatch } = useCartContext();
 
     const updateQuantity = (sku, quantity) => {
         cartDispatch({
@@ -112,8 +112,9 @@ const CartItem = ({ product }) => {
     )
 }
 
-const Cart = ({ toggleCart }) => {
-    const { cart } = useContext(CartContext);
+const Cart = () => {
+    const { cart, isOpenCart, setIsOpenCart } = useCartContext();
+    const toggleCart = () => setIsOpenCart(!isOpenCart);
     return (
         <div style={{ padding: `1rem` }}>
             <button
@@ -157,19 +158,19 @@ const Cart = ({ toggleCart }) => {
     )
 }
 
-const CartButton = ({ toggleCart }) => {
-    const { cart } = useContext(CartContext);
+const CartButton = () => {
+    const { cart, isOpenCart, setIsOpenCart } = useCartContext();
     return (
         <button
             className={styles.shoppingCart__cartButton}
-            onClick={toggleCart}>
+            onClick={() => setIsOpenCart(!isOpenCart)}>
             Cart ({cartQuantityTotal(cart)})
         </button>
     )
 }
 
 const CancelCart = () => {
-    const { cartDispatch } = useContext(CartContext);
+    const { cartDispatch } = useCartContext();
     return (
         <button
             className={styles.shoppingCart__cancelButton}
@@ -180,22 +181,14 @@ const CancelCart = () => {
 }
 
 const CheckoutCart = () => {
-    const [isCheckingOut, setIsCheckingOut] = useState(false);
+    const { setIsOpenCart } = useCartContext();
     return (
-        <>
-            <button
-                className={styles.shoppingCart__checkoutButton}
-                onClick={() => setIsCheckingOut(true)}>
-                Check out
-            </button>
-            <Modal
-                appElement={document.querySelector('#root')}
-                contentLabel="Checkout Cart Simulation"
-                isOpen={isCheckingOut}
-                onRequestClose={() => setIsCheckingOut(false)}>
-                <p>This site is just a showcase, sorry you can't place an order</p>
-            </Modal>
-        </>
+        <Link
+            className={styles.shoppingCart__checkoutButton}
+            onClick={() => setIsOpenCart(false)}
+            to="/checkout">
+            Check out
+        </Link>
     )
 }
 

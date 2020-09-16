@@ -1,8 +1,7 @@
 .checkoutForm__form {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
-    padding: 1rem;
+    padding: 0 1rem;
 }
 
 .checkoutForm__section {
@@ -28,10 +27,31 @@
     color: white;
 }
 
+.checkoutForm__heading {
+    display: flex;
+    align-items: center;
+}
+
+.checkoutForm__heading svg{
+    fill: var(--accentColor);
+    margin: 0 1rem 0 0;
+}
+
 .checkoutForm__form label {
     display: block;
     padding: 0 0 0.25rem 0;
     width: 100%;
+}
+
+.checkoutForm__formLabel {
+    display: block;
+    padding: 0 0 0.25rem 0;
+    width: 100%;
+}
+
+.checkoutForm__preset {
+    display: flex;
+    justify-content: space-between;
 }
 
 .checkoutForm__form input {
@@ -62,6 +82,7 @@
     font-weight: 300;
     margin: 2rem 0;
     padding: 1rem;
+    text-align: center;
     text-transform: uppercase;
     width: 100%;
 }
@@ -82,7 +103,7 @@
     padding: 0;
     border: 0;
     height: 1px;
-    width: 1px;
+    width: 1px !important;
     overflow: hidden; 
 }
 
@@ -103,6 +124,29 @@
     color: red;
 }
 
+.checkoutForm__sameAsBilling {
+    padding: 0 1rem 1rem 1rem;
+    display: flex; 
+    align-items: center;
+}
+
+.checkoutForm__sameAsBilling label {
+    margin-left: 1rem;
+}
+
 .checkoutForm__sectionBody {
     padding: 1rem;
+}
+
+.checkoutForm__contact {
+    padding: 1rem 2rem;
+}
+
+.checkoutForm__contact h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.checkoutForm__contact a {
+    color: var(--accentColor);
 }

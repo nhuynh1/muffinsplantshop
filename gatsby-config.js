@@ -34,7 +34,7 @@ module.exports = {
         fonts: [
           {
             family: `Source Sans Pro`,
-            variants: [`300`, `400`]
+            variants: [`300`, `400`, `500`]
           },
           {
             family: `Montserrat`,
@@ -50,6 +50,14 @@ module.exports = {
       options: {
           pathFields: ["imageAbs"],
       },
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/
+        }
+      }
     },
     `gatsby-plugin-react-helmet`,
   ],

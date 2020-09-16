@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
+import { useCartContext } from '../../../wrap-with-provider';
 import { CartButton, Cart } from '../shopping-cart/shopping-cart';
 import PromoBar from '../promo-bar/promo-bar';
 import styles from './layout.module.css';
@@ -16,8 +17,8 @@ const Layout = ({ children }) => {
     `)
 
     const [isOpenMenu, setIsOpenMenu] = useState(false);
-    const [isOpenCart, setIsOpenCart] = useState(false);
-    
+    const { isOpenCart } = useCartContext();
+
     useEffect(() => {
         if(isOpenCart){
             document.body.setAttribute('style', 'overflow-y:hidden; position: fixed; left: 0; right: 0');
@@ -43,12 +44,11 @@ const Layout = ({ children }) => {
                             </h1>
                         </Link>
                     </div>
-
-                    <CartButton toggleCart={() => setIsOpenCart(!isOpenCart)} />
+                    <CartButton />
                 </header>
                 <div 
                     className={`${styles.layout__navigationMenuWrapper} 
-                    ${isOpenMenu && styles.layout__navigationOpen}`}>
+                    ${isOpenMenu ? styles.layout__navigationOpen : ''}`}>
                     <ul className={styles.layout__navigationMenu}>
                         <li><Link
                             activeClassName={styles.layout__activeLink}
@@ -75,7 +75,7 @@ const Layout = ({ children }) => {
                 </footer>
             </div>
             {isOpenCart && (<div style={{ backgroundColor: `white`, position: `absolute`, top: 0, right: 0, width: `100%`, maxWidth: 400, height: `100vh`, boxShadow: `-4px 0px 2px 0px rgba(0,0,0, 0.12)`, overflowY: `auto` }}>
-                <Cart toggleCart={() => setIsOpenCart(!isOpenCart)} />
+                <Cart />
             </div>)}
         </div>
     );

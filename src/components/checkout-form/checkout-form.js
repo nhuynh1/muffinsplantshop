@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import numeral from 'numeral';
-import { useCartContext } from '../../../wrap-with-provider';
-import { cartQuantityTotal, cartAmountTotal } from '../../selectors/cartQuantity';
+
+import CheckoutSummary from './checkout-summary';
+import CheckIcon from './assets/check_circle.svg';
+
 import styles from './checkout-form.module.css';
 
 const baseSchema = Yup.object({
@@ -32,7 +33,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
         postalCode: shippingValues ? shippingValues.postalCode : "",
         phone: shippingValues ? shippingValues.phone : "",
         email: shippingValues ? shippingValues.email : "",
-        shipping: shippingValues ? shippingValues.shipping : "standard"
+        shipping: shippingValues ? shippingValues.shipping : "Standard"
     };
     const validationSchema = baseSchema.shape({
         phone: Yup.string().trim()
@@ -76,6 +77,10 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                         type="text"
                         value={values.lastName} />
                     <span className={styles.checkoutForm__error}>{errors.lastName ? errors.lastName : null}</span>
+                </div>
+                <div>
+                    <p className={styles.checkoutForm__formLabel}>Country</p>
+                    <p className={styles.checkoutForm__preset}><span>Canada</span><span>We can only ship within Canada</span></p>
                 </div>
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="addressOne">Address Line 1<span className="required">*</span></label>
@@ -133,8 +138,8 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                         className={styles.checkoutForm__shippingOption}
                         type="radio"
                         name="shipping"
-                        value="standard"
-                        checked={values.shipping === 'standard'}
+                        value="Standard"
+                        checked={values.shipping === 'Standard'}
                         onChange={handleChange}
                         id="standard" />
                     <label htmlFor="standard">
@@ -144,8 +149,8 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                         className={styles.checkoutForm__shippingOption}
                         type="radio"
                         name="shipping"
-                        value="express"
-                        checked={values.shipping === 'express'}
+                        value="Express"
+                        checked={values.shipping === 'Express'}
                         onChange={handleChange}
                         id="express" />
                     <label htmlFor="express">
@@ -172,6 +177,7 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                         value={values.email} />
                     <span className={styles.checkoutForm__error}>{errors.email ? errors.email : null}</span>
                 </div>
+                <p><span className="required">*</span>Required Fields</p>
                 <button
                     className={styles.checkoutForm__submitButton}
                     data-testid="submit-shipping-button"
@@ -190,6 +196,7 @@ const Details = ({ values, section }) => {
         municipality,
         provinceTerritory,
         postalCode,
+        country,
         phone,
         email,
         shipping } = values;
@@ -199,15 +206,19 @@ const Details = ({ values, section }) => {
             <p>{addressOne}</p>
             <p>{addressTwo}</p>
             <p>{municipality}, {provinceTerritory}, {postalCode}</p>
+            <p>{country ? country : `Canada`}</p>
+            <br />
             {section === 'shipping' && <p>{shipping} shipping</p>}
-            {section === 'shipping' && <p>{phone}</p>}
-            <p></p>
-            {section === 'shipping' && <p>{email}</p>}
+            {section === 'shipping' && <p>Phone number: {phone}</p>}
+            {section === 'shipping' && <p>Email: {email}</p>}
         </div>
     );
 }
 
 export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipping, setSameAsShipping, billingValues }) => {
+    const validationSchema = baseSchema.shape({
+        country: Yup.string().required("Required")
+    })
     const { handleSubmit, handleChange, values, errors } = useFormik({
         initialValues: {
             firstName: billingValues ? billingValues.firstName : "",
@@ -216,9 +227,10 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
             addressTwo: billingValues ? billingValues.addressTwo : "",
             municipality: billingValues ? billingValues.municipality : "",
             provinceTerritory: billingValues ? billingValues.provinceTerritory : "",
-            postalCode: billingValues ? billingValues.postalCode : ""
+            postalCode: billingValues ? billingValues.postalCode : "",
+            country: billingValues ? billingValues.country: ""
         },
-        validationSchema: baseSchema,
+        validationSchema,
         onSubmit(values) {
             setValues(values);
             setSection('payment');
@@ -227,22 +239,29 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
 
     return (
         <div>
-            <input
-                checked={sameAsShipping}
-                id="sameAsShipping"
-                name="sameAsShipping"
-                onChange={(e) => setSameAsShipping(e.target.checked)}
-                type="checkbox" />
-            <label htmlFor="sameAsShipping">My billing address is the same as my shipping address</label>
+            <div className={styles.checkoutForm__sameAsBilling}>
+                <input
+                    checked={sameAsShipping}
+                    id="sameAsShipping"
+                    name="sameAsShipping"
+                    onChange={(e) => setSameAsShipping(e.target.checked)}
+                    type="checkbox" />
+                <label htmlFor="sameAsShipping">My billing address is the same as my shipping address</label>
+            </div>
+
             {sameAsShipping ?
-                (<div style={{ padding: `1rem` }}>
+                (<>
                     <Details values={shippingValues} section="billing" />
-                    <button
-                        className={styles.checkoutForm__submitButton}
-                        data-testid="submit-billing-button"
-                        onClick={() => setSection('payment')}
-                        type="button">continue to payment</button>
-                </div>) :
+                    <div style={{ padding: `0 1rem` }}>
+                        <button
+                            className={styles.checkoutForm__submitButton}
+                            data-testid="submit-billing-button"
+                            onClick={() => setSection('payment')}
+                            type="button">
+                            Continue to payment
+                        </button>
+                    </div>
+                </>) :
                 (<form
                     className={styles.checkoutForm__form}
                     data-testid="billing-form"
@@ -266,6 +285,16 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
                             type="text"
                             value={values.lastName} />
                         <span className={styles.checkoutForm__error}>{errors.lastName ? errors.lastName : null}</span>
+                    </div>
+                    <div className={styles.checkoutForm__field}>
+                        <label htmlFor="country">Country<span className="required">*</span></label>
+                        <input
+                            id="country"
+                            name="country"
+                            onChange={handleChange}
+                            type="text"
+                            value={values.country} />
+                        <span className={styles.checkoutForm__error}>{errors.addressOne ? errors.addressOne : null}</span>
                     </div>
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="addressOne">Address Line 1<span className="required">*</span></label>
@@ -321,8 +350,9 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
                         className={styles.checkoutForm__submitButton}
                         data-testid="submit-billing-button"
                         type="submit">continue to payment</button>
-                </form>)}
-        </div>
+                </form>)
+            }
+        </div >
     )
 }
 
@@ -337,53 +367,14 @@ const EditButton = ({ setSection, section }) => {
     );
 }
 
-const CheckoutSummary = ({ shippingValues }) => {
-    const tempShippingDict = {
-        standard: 10.00,
-        express: 17.00
-    };
-
-    const { cart } = useCartContext();
-    const [showItems, setShowItems] = useState(false);
-
-    const cartQuantity = cartQuantityTotal(cart);
-    const cartTotal = cartAmountTotal(cart);
-    const cartShippingTotal = shippingValues ? (cartTotal + tempShippingDict[shippingValues.shipping]) * 1.13 : cartTotal;
-
-    const cartQuantityFormatted = `${cartQuantity} item${cartQuantity > 1 ? 's' : ''}`;
-    const cartTotalFormatted = numeral(cartShippingTotal).format('$0,0.00');
-
-
-    const summaryText = `${cartQuantityFormatted} ${!showItems ? (`${cartTotalFormatted} ${!shippingValues ? '+ tax and shipping' : ''}`) : ''}`
-
-
-
+const CheckoutHeading = ({ children, complete, current, section, setSection }) => {
     return (
-        <div style={{ padding: `0 1rem` }}>
-            <h2 className="heading-first">Checkout</h2>
-            <button
-                onClick={() => setShowItems(!showItems)}
-                type="button">
-                &#9654;
-            </button>
-            <p>{summaryText}</p>
-            
-            {showItems && (<>
-                {cart.map(product => (
-                    <div key={product.sku}>
-                        <img
-                            alt=""
-                            src={product.imageSrc} />
-                        <p>{product.title} - {product.size}</p>
-                        <p>Qty: {product.quantity}</p>
-                        <p>{product.price}</p>
-                    </div>
-                ))}
-                <p>Subtotal {numeral(cartTotal).format('$0,0.00')}</p>
-                <p>Shipping {shippingValues ? numeral(tempShippingDict[shippingValues.shipping]).format('$0,0.00') : '--'}</p>
-                <p>Taxes {shippingValues ? numeral((cartTotal + tempShippingDict[shippingValues.shipping]) * 0.13).format('$0,0.00') : '--'}</p>
-                <p>{shippingValues ? `Total ${numeral((cartTotal + tempShippingDict[shippingValues.shipping]) * 1.13).format('$0,0.00')}` : `Complete and submit shipping information for tax and shipping amounts`}</p>
-            </>)}
+        <div className={`${styles.checkoutForm__section} ${current ? styles.current : ''}`}>
+            <div className={styles.checkoutForm__heading}>
+                {complete && <CheckIcon />}
+                <h2>{children}</h2>
+            </div>
+            {complete && <EditButton setSection={setSection} section={section} />}
         </div>
     )
 }
@@ -398,36 +389,49 @@ const CheckoutForm = () => {
     return (
         <div>
             <CheckoutSummary shippingValues={shippingValues} />
-
-            <div className={`${styles.checkoutForm__section} ${section === 'shipping' ? styles.current : ''}`}>
-                <h2>1. Shipping</h2>
-                {shippingValues && section !== 'shipping' && <EditButton setSection={setSection} section="shipping" />}
+            <CheckoutHeading
+                complete={shippingValues && section !== 'shipping'}
+                current={section === 'shipping'}
+                section="shipping"
+                setSection={setSection}>
+                1. Shipping
+            </CheckoutHeading>
+            <div className={styles.checkoutForm__sectionBody}>
+                {section === 'shipping' ?
+                    <ShippingForm
+                        setValues={setShippingValues}
+                        shippingValues={shippingValues}
+                        setSection={setSection} /> :
+                    <Details values={shippingValues} section="shipping" />}
             </div>
-            {section === 'shipping' ?
-                <ShippingForm
-                    setValues={setShippingValues}
-                    shippingValues={shippingValues}
-                    setSection={setSection} /> :
-                <Details values={shippingValues} section="shipping" />}
-            <div className={`${styles.checkoutForm__section} ${section === 'billing' ? styles.current : ''}`}>
-                <h2>2. Billing</h2>
-                {haveBillingInfo && section !== 'billing' && <EditButton setSection={setSection} section="billing" />}
+            <CheckoutHeading
+                complete={haveBillingInfo && section !== 'billing'}
+                current={section === 'billing'}
+                section="billing"
+                setSection={setSection}>
+                2. Billing
+            </CheckoutHeading>
+            <div className={styles.checkoutForm__sectionBody}>
+                {section === 'billing' ?
+                    <BillingForm
+                        billingValues={billingValues}
+                        sameAsShipping={sameAsShipping}
+                        setSameAsShipping={setSameAsShipping}
+                        setValues={setBillingValues}
+                        setSection={setSection}
+                        shippingValues={shippingValues} /> :
+                    haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
             </div>
-            {section === 'billing' ?
-                <BillingForm
-                    billingValues={billingValues}
-                    sameAsShipping={sameAsShipping}
-                    setSameAsShipping={setSameAsShipping}
-                    setValues={setBillingValues}
-                    setSection={setSection}
-                    shippingValues={shippingValues} /> :
-                haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
-            <div className={`${styles.checkoutForm__section} ${section === 'payment' ? styles.current : ''}`}>
-                <h2>3. Payment</h2>
-            </div>
+            <CheckoutHeading
+                complete={false}
+                current={section === 'payment'}
+                section="payment"
+                setSection={setSection}>
+                3. Payment
+            </CheckoutHeading>
             <div className={styles.checkoutForm__sectionBody}>
                 {section === 'payment' &&
-                    (<>
+                    (<div style={{ padding: `0 1rem` }}>
                         <span>Payment is not available in this demo</span>
                         <Link
                             className={styles.checkoutForm__submitButton}
@@ -435,12 +439,12 @@ const CheckoutForm = () => {
                             to="/shop">
                             Go back to the shop
                         </Link>
-                    </>)
+                    </div>)
                 }
             </div>
-            <div>
+            <div className={styles.checkoutForm__contact}>
                 <h3>Contact Info</h3>
-                <p>Email a question; expect to hear back in 24 hours: contact@muffinplants.com</p>
+                <p>Email a question; expect to hear back in 24 hours: <a href="mailto:contact@muffinplants.com">contact@muffinplants.com</a></p>
             </div>
         </div>)
 }

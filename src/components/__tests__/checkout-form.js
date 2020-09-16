@@ -14,7 +14,7 @@ const shippingValues = {
     postalCode: "K0A 2X0",
     phone: "613-451-5555",
     email: "jonny@apple.com",
-    shipping: "standard"
+    shipping: "Standard"
 }
 
 const billingValues = {
