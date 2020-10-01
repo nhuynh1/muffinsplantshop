@@ -5,7 +5,8 @@ import { CartButton, Cart } from '../shopping-cart/shopping-cart';
 import PromoBar from '../promo-bar/promo-bar';
 import styles from './layout.module.css';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, location }) => {
+    const path = location.pathname;
     const data = useStaticQuery(graphql`
         query {
             site {
@@ -20,7 +21,7 @@ const Layout = ({ children }) => {
     const { isOpenCart } = useCartContext();
 
     useEffect(() => {
-        if(isOpenCart){
+        if (isOpenCart) {
             document.body.setAttribute('style', 'overflow-y:hidden; position: fixed; left: 0; right: 0');
         } else {
             document.body.setAttribute('style', '');
@@ -33,20 +34,20 @@ const Layout = ({ children }) => {
             <div className={styles.layout}>
                 <header className={styles.layout__header}>
                     <div style={{ display: `flex` }}>
-                        <button
+                        {path !== '/checkout' && <button
                             aria-label="Toggle navigation menu"
                             className={styles.layout__menuButton}
                             onClick={() => setIsOpenMenu(!isOpenMenu)}>
-                        </button>
+                        </button>}
                         <Link to="/">
                             <h1 className={styles.layout__headerText}>
                                 {data.site.siteMetadata.title}
                             </h1>
                         </Link>
                     </div>
-                    <CartButton />
+                    {path !== '/checkout' && <CartButton />}
                 </header>
-                <div 
+                {path !== '/checkout' && <div
                     className={`${styles.layout__navigationMenuWrapper} 
                     ${isOpenMenu ? styles.layout__navigationOpen : ''}`}>
                     <ul className={styles.layout__navigationMenu}>
@@ -59,7 +60,7 @@ const Layout = ({ children }) => {
                             className={styles.layout__navigationMenuItem}
                             to="/about">About</Link></li>
                     </ul>
-                </div>
+                </div>}
                 {children}
                 <footer className={styles.layout__footer}>
                     <div className={styles.layout__footerLinks}>

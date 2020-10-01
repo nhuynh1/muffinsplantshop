@@ -3,9 +3,9 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 
-const About = ({ data }) => {
+const About = ({ data, location }) => {
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO title="About" />
       <div style={{ display: `flex`, flexDirection: `column`, height: `50vh`, padding: `1rem` }}>
         <div style={{ flex: `1` }}>

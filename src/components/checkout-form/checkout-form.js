@@ -114,12 +114,26 @@ export const ShippingForm = ({ setValues, setSection, shippingValues }) => {
                 </div>
                 <div className={styles.checkoutForm__field}>
                     <label htmlFor="provinceTerritory">Province/Territory<span className="required">*</span></label>
-                    <input
+                    <select
+                        value={values.provinceTerritory}
                         id="provinceTerritory"
                         name="provinceTerritory"
-                        onChange={handleChange}
-                        type="text"
-                        value={values.provinceTerritory} />
+                        onChange={handleChange}>
+                        <option value="">Select</option>
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NL">Newfoundland  and Labrador</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NU">Nunavut</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Quebec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="YT">Yukon</option>
+                    </select>
                     <span className={styles.checkoutForm__error}>{errors.provinceTerritory ? errors.provinceTerritory : null}</span>
                 </div>
                 <div className={styles.checkoutForm__field}>
@@ -228,7 +242,7 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
             municipality: billingValues ? billingValues.municipality : "",
             provinceTerritory: billingValues ? billingValues.provinceTerritory : "",
             postalCode: billingValues ? billingValues.postalCode : "",
-            country: billingValues ? billingValues.country: ""
+            country: billingValues ? billingValues.country : ""
         },
         validationSchema,
         onSubmit(values) {
@@ -328,12 +342,26 @@ export const BillingForm = ({ setValues, shippingValues, setSection, sameAsShipp
                     </div>
                     <div className={styles.checkoutForm__field}>
                         <label htmlFor="provinceTerritory">Province/Territory<span className="required">*</span></label>
-                        <input
+                        <select
+                            value={values.provinceTerritory}
                             id="provinceTerritory"
                             name="provinceTerritory"
-                            onChange={handleChange}
-                            type="text"
-                            value={values.provinceTerritory} />
+                            onChange={handleChange}>
+                            <option value="">Select</option>
+                            <option value="AB">Alberta</option>
+                            <option value="BC">British Columbia</option>
+                            <option value="MB">Manitoba</option>
+                            <option value="NB">New Brunswick</option>
+                            <option value="NL">Newfoundland  and Labrador</option>
+                            <option value="NS">Nova Scotia</option>
+                            <option value="NT">Northwest Territories</option>
+                            <option value="NU">Nunavut</option>
+                            <option value="ON">Ontario</option>
+                            <option value="PE">Prince Edward Island</option>
+                            <option value="QC">Quebec</option>
+                            <option value="SK">Saskatchewan</option>
+                            <option value="YT">Yukon</option>
+                        </select>
                         <span className={styles.checkoutForm__error}>{errors.provinceTerritory ? errors.provinceTerritory : null}</span>
                     </div>
                     <div className={styles.checkoutForm__field}>
@@ -372,7 +400,7 @@ const CheckoutHeading = ({ children, complete, current, section, setSection }) =
         <div className={`${styles.checkoutForm__section} ${current ? styles.current : ''}`}>
             <div className={styles.checkoutForm__heading}>
                 {complete && <CheckIcon />}
-                <h2>{children}</h2>
+                <h3>{children}</h3>
             </div>
             {complete && <EditButton setSection={setSection} section={section} />}
         </div>
@@ -387,62 +415,67 @@ const CheckoutForm = () => {
     const haveBillingInfo = billingValues || (sameAsShipping && shippingValues);
 
     return (
-        <div>
-            <CheckoutSummary shippingValues={shippingValues} />
-            <CheckoutHeading
-                complete={shippingValues && section !== 'shipping'}
-                current={section === 'shipping'}
-                section="shipping"
-                setSection={setSection}>
-                1. Shipping
-            </CheckoutHeading>
-            <div className={styles.checkoutForm__sectionBody}>
-                {section === 'shipping' ?
-                    <ShippingForm
-                        setValues={setShippingValues}
-                        shippingValues={shippingValues}
-                        setSection={setSection} /> :
-                    <Details values={shippingValues} section="shipping" />}
+        <div className={styles.checkoutForm__wrap}>
+            <h2 className={`heading-first ${styles.checkoutForm__header}`}>Checkout</h2>
+            <div style={{ gridArea: `summary` }}>
+                <CheckoutSummary shippingValues={shippingValues} />
             </div>
-            <CheckoutHeading
-                complete={haveBillingInfo && section !== 'billing'}
-                current={section === 'billing'}
-                section="billing"
-                setSection={setSection}>
-                2. Billing
-            </CheckoutHeading>
-            <div className={styles.checkoutForm__sectionBody}>
-                {section === 'billing' ?
-                    <BillingForm
-                        billingValues={billingValues}
-                        sameAsShipping={sameAsShipping}
-                        setSameAsShipping={setSameAsShipping}
-                        setValues={setBillingValues}
-                        setSection={setSection}
-                        shippingValues={shippingValues} /> :
-                    haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
-            </div>
-            <CheckoutHeading
-                complete={false}
-                current={section === 'payment'}
-                section="payment"
-                setSection={setSection}>
-                3. Payment
-            </CheckoutHeading>
-            <div className={styles.checkoutForm__sectionBody}>
-                {section === 'payment' &&
-                    (<div style={{ padding: `0 1rem` }}>
-                        <span>Payment is not available in this demo</span>
-                        <Link
-                            className={styles.checkoutForm__submitButton}
-                            style={{ display: `block` }}
-                            to="/shop">
-                            Go back to the shop
+            <div style={{ gridArea: `form` }}>
+                <CheckoutHeading
+                    complete={shippingValues && section !== 'shipping'}
+                    current={section === 'shipping'}
+                    section="shipping"
+                    setSection={setSection}>
+                    1. Shipping
+                </CheckoutHeading>
+                <div className={styles.checkoutForm__sectionBody}>
+                    {section === 'shipping' ?
+                        <ShippingForm
+                            setValues={setShippingValues}
+                            shippingValues={shippingValues}
+                            setSection={setSection} /> :
+                        <Details values={shippingValues} section="shipping" />}
+                </div>
+                <CheckoutHeading
+                    complete={haveBillingInfo && section !== 'billing'}
+                    current={section === 'billing'}
+                    section="billing"
+                    setSection={setSection}>
+                    2. Billing
+                </CheckoutHeading>
+                <div className={styles.checkoutForm__sectionBody}>
+                    {section === 'billing' ?
+                        <BillingForm
+                            billingValues={billingValues}
+                            sameAsShipping={sameAsShipping}
+                            setSameAsShipping={setSameAsShipping}
+                            setValues={setBillingValues}
+                            setSection={setSection}
+                            shippingValues={shippingValues} /> :
+                        haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
+                </div>
+                <CheckoutHeading
+                    complete={false}
+                    current={section === 'payment'}
+                    section="payment"
+                    setSection={setSection}>
+                    3. Payment
+                </CheckoutHeading>
+                <div className={styles.checkoutForm__sectionBody}>
+                    {section === 'payment' &&
+                        (<div style={{ padding: `0 1rem` }}>
+                            <span>Payment is not available in this demo</span>
+                            <Link
+                                className={styles.checkoutForm__submitButton}
+                                style={{ display: `block` }}
+                                to="/shop">
+                                Go back to the shop
                         </Link>
-                    </div>)
-                }
+                        </div>)
+                    }
+                </div>
             </div>
-            <div className={styles.checkoutForm__contact}>
+            <div className={styles.checkoutForm__contact} style={{ gridArea: `contact` }}>
                 <h3>Contact Info</h3>
                 <p>Email a question; expect to hear back in 24 hours: <a href="mailto:contact@muffinplants.com">contact@muffinplants.com</a></p>
             </div>

@@ -3,10 +3,10 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 
-const DeliveryInfo = ({ data }) => {
-  console.log(data);
+const DeliveryInfo = ({ data, location }) => {
+  
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO title="Delivery Information" />
       <div style={{ display: `flex`, flexDirection: `column`, height: `50vh`, padding: `1rem` }}>
         <div style={{ flex: `1` }}>

@@ -3,6 +3,27 @@
     display: flex;
 }
 
+.cart__summary_header {
+    background: #FAFAFA;
+    display: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 1rem 0;
+    padding: 1rem;
+    text-transform: uppercase;
+}
+
+@media screen and (min-width: 1000px) {
+    .cart__summary {
+        display: none;
+    }
+
+    .cart__summary_header {
+        display: block;
+    }
+}
+
 .cart__summary button {
     background: none;
     border: none;
@@ -18,7 +39,18 @@
 }
 
 .products {
+    display: none;
     padding: 1rem;
+}
+
+@media screen and (min-width: 1000px) {
+    .products {
+        display: block;
+    }
+}
+
+.products.products_show {
+    display: block;
 }
 
 .product {

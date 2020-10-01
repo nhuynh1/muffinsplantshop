@@ -6,9 +6,9 @@ import ProductItem from '../components/product-item/product-item';
 import styles from './styles/home.module.css';
 import { minPrice as _minPrice } from '../helpers/helpers';
 
-const Home = ({ data }) => {
+const Home = ({ data, location }) => {
     return (
-        <Layout>
+        <Layout location={location}>
             <SEO title="Shop Demo" />
             <div className={styles.home__cta}>
                 <div className={styles.home__ctaText}>

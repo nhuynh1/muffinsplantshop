@@ -10,7 +10,7 @@ import { minPrice as _minPrice } from '../helpers/helpers';
 import styles from './styles/shop.module.css';
 import '../styles/react-tabs-custom.css';
 
-const Shop = ({ data }) => {
+const Shop = ({ data, location }) => {
     const [sizesFilter, setSizesFilter] = useState([]);
     const [varietiesFilter, setVarietiesFilter] = useState([]);
     const filteredProducts = productSelector(data.products.edges, { sizesFilter, varietiesFilter });
@@ -34,7 +34,7 @@ const Shop = ({ data }) => {
     }
 
     return (
-        <Layout>
+        <Layout location={location}>
             <SEO title="Shop" />
             <div className="content-container">
                 <h2 className="heading-first">Shop</h2>

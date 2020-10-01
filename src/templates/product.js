@@ -7,13 +7,13 @@ import SEO from '../components/seo';
 import { AddToCart } from '../components/shopping-cart/shopping-cart';
 import styles from './products.module.css';
 
-const Product = ({ data }) => {
+const Product = ({ data, location }) => {
     const productData = data.product.frontmatter;
     const productBody = data.product.html;
     const [priceSize, setSize] = useState(productData.priceBySize[0]);
 
     return (
-        <Layout>
+        <Layout location={location}>
             <SEO title={productData.title} />
             <div className={styles.products__container}>
 

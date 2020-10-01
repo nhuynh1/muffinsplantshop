@@ -29,54 +29,53 @@ const CheckoutSummary = ({ shippingValues }) => {
 
     return (
         <div style={{ padding: `0 1rem`, width: `100%` }}>
-            <h2 className="heading-first">Checkout</h2>
+            <h3 className={styles.cart__summary_header}>Summary</h3>
             <div className={styles.cart__summary}>
                 <button
                     className={showItems ? styles.open : ''}
                     onClick={() => setShowItems(!showItems)}
                     type="button">
-                        &#9654;
+                    &#9654;
                 </button>
                 <p>{summaryText}</p>
             </div>
 
-            {showItems && (
-                <div className={styles.products}>
-                    {cart.map(product => (
-                        <div key={product.sku} className={styles.product}>
-                            <img
-                                alt=""
-                                className={styles.product__image}
-                                src={product.imageSrc} />
-                            <div className={styles.product__details}>
-                                <p>{product.title} - {product.size}</p>
-                                <p className={styles.product__quantity}>Qty: {product.quantity}</p>
-                                <p className={styles.product__price}>{numeral(product.price).format('$0,0.00')}</p>
-                            </div>
+            <div className={`${styles.products} ${showItems ? styles.products_show : ''}`}>
+                {cart.map(product => (
+                    <div key={product.sku} className={styles.product}>
+                        <img
+                            alt=""
+                            className={styles.product__image}
+                            src={product.imageSrc} />
+                        <div className={styles.product__details}>
+                            <p>{product.title} - {product.size}</p>
+                            <p className={styles.product__quantity}>Qty: {product.quantity}</p>
+                            <p className={styles.product__price}>{numeral(product.price).format('$0,0.00')}</p>
                         </div>
-                    ))}
-                    <div className={styles.order__summary__top}>
-                        <p className={styles.order__summary}>
-                            <span>Subtotal</span>
-                            <span>{numeral(cartSummary.subtotal).format('$0,0.00')}</span>
-                        </p>
-                        <p className={styles.order__summary}>
-                            <span>Shipping</span>
-                            <span>{shippingValues ? numeral(cartSummary.shipping).format('$0,0.00') : '--'}</span></p>
-                        <p className={styles.order__summary}>
-                            <span>Taxes</span>
-                            <span>{shippingValues ? numeral(cartSummary.tax).format('$0,0.00') : '--'}</span>
-                        </p>
                     </div>
-
-                    <p className={styles.order__summary}>{shippingValues ?
-                        (<>
-                            <span>Total</span>
-                            <span>{cartTotalFormatted}</span>
-                        </>) :
-                        (<span className={styles.order__message}>Complete and submit shipping information for tax and shipping amounts</span>)}
+                ))}
+                <div className={styles.order__summary__top}>
+                    <p className={styles.order__summary}>
+                        <span>Subtotal</span>
+                        <span>{numeral(cartSummary.subtotal).format('$0,0.00')}</span>
                     </p>
-                </div>)}
+                    <p className={styles.order__summary}>
+                        <span>Shipping</span>
+                        <span>{shippingValues ? numeral(cartSummary.shipping).format('$0,0.00') : '--'}</span></p>
+                    <p className={styles.order__summary}>
+                        <span>Taxes</span>
+                        <span>{shippingValues ? numeral(cartSummary.tax).format('$0,0.00') : '--'}</span>
+                    </p>
+                </div>
+
+                <p className={styles.order__summary}>{shippingValues ?
+                    (<>
+                        <span>Total</span>
+                        <span>{cartTotalFormatted}</span>
+                    </>) :
+                    (<span className={styles.order__message}>Complete and submit shipping information for tax and shipping amounts</span>)}
+                </p>
+            </div>
         </div>
     )
 }
