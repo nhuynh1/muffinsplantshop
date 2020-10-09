@@ -1,0 +1,17 @@
+[
+	{
+		"sku": "AV014",
+		"name": "Aloe Vera",
+		"priceBySize": [
+			{
+				"size": "Small",
+				"price": 20
+			},
+			{
+				"size": "Mini",
+				"price": 10
+			}
+		],
+		"inStock": 5
+	}
+]

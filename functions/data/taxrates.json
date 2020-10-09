@@ -1,0 +1,54 @@
+[
+    {
+        "state": "AB",
+        "total_tax_rate": 0.05
+    },
+    {
+        "state": "BC",
+        "total_tax_rate": 0.12
+    },
+    {
+        "state": "MB",
+        "total_tax_rate": 0.12
+    },
+    {
+        "state": "NB",
+        "total_tax_rate": 0.15
+    },
+    {
+        "state": "NL",
+        "total_tax_rate": 0.15
+    },
+    {
+        "state": "NS",
+        "total_tax_rate": 0.15
+    },
+    {
+        "state": "NT",
+        "total_tax_rate": 0.05
+    },
+    {
+        "state": "NU",
+        "total_tax_rate": 0.05
+    },
+    {
+        "state": "ON",
+        "total_tax_rate": 0.13
+    },
+    {
+        "state": "PE",
+        "total_tax_rate": 0.15
+    },
+    {
+        "state": "QC",
+        "total_tax_rate": 0.14975
+    },
+    {
+        "state": "SK",
+        "total_tax_rate": 0.11
+    },
+    {
+        "state": "YT",
+        "total_tax_rate": 0.05
+    }
+]

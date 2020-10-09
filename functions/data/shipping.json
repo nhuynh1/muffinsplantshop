@@ -1,0 +1,10 @@
+[
+    {
+        "shipping_method": "Express",
+        "shipping_amount": 17.00
+    },
+    {
+        "shipping_method": "Standard",
+        "shipping_amount": 10.00
+    }
+]
