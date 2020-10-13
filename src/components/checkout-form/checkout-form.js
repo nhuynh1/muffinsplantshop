@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'gatsby';
+import React, { useEffect, useState } from 'react';
+import { navigate } from 'gatsby';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
+import { useCartContext } from '../../../wrap-with-provider';
 import CheckoutSummary from './checkout-summary';
 import CheckIcon from './assets/check_circle.svg';
 
@@ -407,12 +409,131 @@ const CheckoutHeading = ({ children, complete, current, section, setSection }) =
     )
 }
 
+const PaymentForm = ({ clientSecret, shippingValues, billingValues, sameAsShipping }) => {
+    const [succeeded, setSucceeded] = useState(false);
+    const [error, setError] = useState(null);
+    const [processing, setProcessing] = useState('');
+    const [disabled, setDisabled] = useState(true);
+    const stripe = useStripe();
+    const elements = useElements();
+    const { cartDispatch } = useCartContext();
+
+    const handleChange = async (event) => {
+        setDisabled(event.empty);
+        setError(event.error ? event.error.message : "");
+    }
+
+    const handleCheckout = async (ev) => {
+        ev.preventDefault();
+        setProcessing(true);
+
+        const billing_address = {
+            line1: sameAsShipping ? shippingValues.addressOne : billingValues.addressOne,
+            line2: sameAsShipping ? shippingValues.addressTwo : billingValues.addressTwo,
+            city: sameAsShipping ? shippingValues.municipality : billingValues.municipality,
+            country: `CA`,
+            postal_code: sameAsShipping ? shippingValues.postalCode : billingValues.postalCode,
+            state: sameAsShipping ? shippingValues.provinceTerritory : billingValues.provinceTerritory
+        }
+
+        const shipping_address = {
+            line1: shippingValues.addressOne,
+            line2: shippingValues.addressTwo,
+            city: shippingValues.municipality,
+            country: `CA`,
+            postal_code: shippingValues.postalCode,
+            state: shippingValues.provinceTerritory
+        }
+
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                    address: billing_address
+                }
+            },
+            shipping: {
+                name: `${shippingValues.firstName} ${shippingValues.lastName}`,
+                address: shipping_address
+            },
+        });
+        if (payload.error) {
+            setError(`Payment failed ${payload.error.message}`);
+            setProcessing(false);
+        } else {
+            setError(null);
+            setProcessing(false);
+            setSucceeded(true);
+            cartDispatch({ type: 'CLEAR_CART' });
+            navigate("/success");
+        }
+    }
+
+    return (
+        <div style={{ padding: `0 1rem` }}>
+            {!succeeded &&
+                (<form onSubmit={handleCheckout}>
+                    <CardElement
+                        id="card-element"
+                        onChange={handleChange}
+                        options={{ hidePostalCode: true }} />
+                    {error && (
+                        <div role="alert">
+                            {error}
+                        </div>
+                    )}
+                    <button
+                        className={styles.checkoutForm__submitButton}
+                        disabled={processing || disabled || succeeded}
+                        type="submit">
+                        Pay
+                </button>
+                </form>)}
+            {succeeded && <p>Test payment succeeded!</p>}
+        </div>
+    )
+}
+
 const CheckoutForm = () => {
     const [section, setSection] = useState('shipping');
     const [shippingValues, setShippingValues] = useState();
     const [billingValues, setBillingValues] = useState();
     const [sameAsShipping, setSameAsShipping] = useState(true);
     const haveBillingInfo = billingValues || (sameAsShipping && shippingValues);
+
+    const [clientSecret, setClientSecret] = useState('');
+    const { cart } = useCartContext();
+
+    useEffect(() => {
+        if (section !== 'payment') return;
+
+        const items = cart.map(item => (
+            {
+                sku: item.sku,
+                quantity: item.quantity,
+                size: item.size
+            }
+        ))
+
+        window
+            .fetch("/.netlify/functions/stripe-checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    items,
+                    shipping: shippingValues.shipping,
+                    state: shippingValues.provinceTerritory
+                })
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                setClientSecret(data.clientSecret);
+            });
+    }, [section, shippingValues, cart]);
 
     return (
         <div className={styles.checkoutForm__wrap}>
@@ -463,15 +584,12 @@ const CheckoutForm = () => {
                 </CheckoutHeading>
                 <div className={styles.checkoutForm__sectionBody}>
                     {section === 'payment' &&
-                        (<div style={{ padding: `0 1rem` }}>
-                            <span>Payment is not available in this demo</span>
-                            <Link
-                                className={styles.checkoutForm__submitButton}
-                                style={{ display: `block` }}
-                                to="/shop">
-                                Go back to the shop
-                        </Link>
-                        </div>)
+                        <PaymentForm
+                            clientSecret={clientSecret}
+                            billingValues={billingValues}
+                            shippingValues={shippingValues}
+                            sameAsShipping={sameAsShipping} />
+
                     }
                 </div>
             </div>
