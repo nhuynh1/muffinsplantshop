@@ -17,7 +17,7 @@
 .layout__headerText {
     font-size: 1.88rem;
     font-weight: 300;
-    margin: 0 0 0 1rem;
+    margin: 0;
     padding: 0;
 }
 
@@ -28,6 +28,7 @@
     background-position: center center;
     border: none;
     height: 36px;
+    margin: 0 1rem 0 0;
     width: 36px;
 }
 

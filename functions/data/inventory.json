@@ -13,5 +13,50 @@
 			}
 		],
 		"inStock": 5
+	},
+	{
+		"sku": "EC022",
+		"name": "Echeveria",
+		"priceBySize": [
+			{
+				"size": "Medium",
+				"price": 10.95
+			},
+			{
+				"size": "Large",
+				"price": 20.00
+			}
+		],
+		"inStock": 5
+	},
+	{
+		"sku": "JB018",
+		"name": "Gasteria",
+		"priceBySize": [
+			{
+				"size": "Medium",
+				"price": 9.00
+			}
+		],
+		"inStock": 5
+	},
+	{
+		"sku": "HC059",
+		"name": "Hedgehog Cactus",
+		"priceBySize": [
+			{
+				"size": "Mini",
+				"price": 8.95
+			},
+			{
+				"size": "Small",
+				"price": 10.95
+			},
+			{
+				"size": "Medium",
+				"price": 12.95
+			}
+		],
+		"inStock": 5
 	}
 ]

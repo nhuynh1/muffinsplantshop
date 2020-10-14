@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -7,6 +7,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useCartContext } from '../../../wrap-with-provider';
 import CheckoutSummary from './checkout-summary';
 import CheckIcon from './assets/check_circle.svg';
+import MuffinImg from './assets/muffin.svg';
 
 import styles from './checkout-form.module.css';
 
@@ -418,6 +419,21 @@ const PaymentForm = ({ clientSecret, shippingValues, billingValues, sameAsShippi
     const elements = useElements();
     const { cartDispatch } = useCartContext();
 
+    const cardOptions = {
+        hidePostalCode: true,
+        style: {
+            base: {
+                color: `rgba(0,0,0, 0.85)`,
+                fontFamily: `Source Sans Pro, Helvetica, Arial, sans-serif`,
+                fontSize: `16px`,
+                fontWeight: `300`,
+                "::placeholder": {
+                    color: `rgba(0,0,0, 0.85)`
+                }
+            }
+        }
+    }
+
     const handleChange = async (event) => {
         setDisabled(event.empty);
         setError(event.error ? event.error.message : "");
@@ -473,12 +489,16 @@ const PaymentForm = ({ clientSecret, shippingValues, billingValues, sameAsShippi
         <div style={{ padding: `0 1rem` }}>
             {!succeeded &&
                 (<form onSubmit={handleCheckout}>
+                    <p style={{ fontSize: `0.8rem`, paddingBottom: `1rem` }}>Test card number: 4242 4242 4242 4242 <br />
+                        CVC: Any 3 digits <br />
+                        Expiry: Any future date
+                    </p>
                     <CardElement
                         id="card-element"
                         onChange={handleChange}
-                        options={{ hidePostalCode: true }} />
+                        options={cardOptions} />
                     {error && (
-                        <div role="alert">
+                        <div className={styles.checkoutForm__error} role="alert">
                             {error}
                         </div>
                     )}
@@ -486,7 +506,7 @@ const PaymentForm = ({ clientSecret, shippingValues, billingValues, sameAsShippi
                         className={styles.checkoutForm__submitButton}
                         disabled={processing || disabled || succeeded}
                         type="submit">
-                        Pay
+                        Place order
                 </button>
                 </form>)}
             {succeeded && <p>Test payment succeeded!</p>}
@@ -506,6 +526,7 @@ const CheckoutForm = () => {
 
     useEffect(() => {
         if (section !== 'payment') return;
+        if (cart.length === 0) return;
 
         const items = cart.map(item => (
             {
@@ -538,65 +559,72 @@ const CheckoutForm = () => {
     return (
         <div className={styles.checkoutForm__wrap}>
             <h2 className={`heading-first ${styles.checkoutForm__header}`}>Checkout</h2>
-            <div style={{ gridArea: `summary` }}>
-                <CheckoutSummary shippingValues={shippingValues} />
-            </div>
-            <div style={{ gridArea: `form` }}>
-                <CheckoutHeading
-                    complete={shippingValues && section !== 'shipping'}
-                    current={section === 'shipping'}
-                    section="shipping"
-                    setSection={setSection}>
-                    1. Shipping
-                </CheckoutHeading>
-                <div className={styles.checkoutForm__sectionBody}>
-                    {section === 'shipping' ?
-                        <ShippingForm
-                            setValues={setShippingValues}
-                            shippingValues={shippingValues}
-                            setSection={setSection} /> :
-                        <Details values={shippingValues} section="shipping" />}
+            {cart.length > 0 ? (<>
+                <div style={{ gridArea: `summary` }}>
+                    <CheckoutSummary shippingValues={shippingValues} />
                 </div>
-                <CheckoutHeading
-                    complete={haveBillingInfo && section !== 'billing'}
-                    current={section === 'billing'}
-                    section="billing"
-                    setSection={setSection}>
-                    2. Billing
+                <div style={{ gridArea: `form` }}>
+                    <CheckoutHeading
+                        complete={shippingValues && section !== 'shipping'}
+                        current={section === 'shipping'}
+                        section="shipping"
+                        setSection={setSection}>
+                        1. Shipping
                 </CheckoutHeading>
-                <div className={styles.checkoutForm__sectionBody}>
-                    {section === 'billing' ?
-                        <BillingForm
-                            billingValues={billingValues}
-                            sameAsShipping={sameAsShipping}
-                            setSameAsShipping={setSameAsShipping}
-                            setValues={setBillingValues}
-                            setSection={setSection}
-                            shippingValues={shippingValues} /> :
-                        haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
-                </div>
-                <CheckoutHeading
-                    complete={false}
-                    current={section === 'payment'}
-                    section="payment"
-                    setSection={setSection}>
-                    3. Payment
+                    <div className={styles.checkoutForm__sectionBody}>
+                        {section === 'shipping' ?
+                            <ShippingForm
+                                setValues={setShippingValues}
+                                shippingValues={shippingValues}
+                                setSection={setSection} /> :
+                            <Details values={shippingValues} section="shipping" />}
+                    </div>
+                    <CheckoutHeading
+                        complete={haveBillingInfo && section !== 'billing'}
+                        current={section === 'billing'}
+                        section="billing"
+                        setSection={setSection}>
+                        2. Billing
                 </CheckoutHeading>
-                <div className={styles.checkoutForm__sectionBody}>
-                    {section === 'payment' &&
-                        <PaymentForm
-                            clientSecret={clientSecret}
-                            billingValues={billingValues}
-                            shippingValues={shippingValues}
-                            sameAsShipping={sameAsShipping} />
+                    <div className={styles.checkoutForm__sectionBody}>
+                        {section === 'billing' ?
+                            <BillingForm
+                                billingValues={billingValues}
+                                sameAsShipping={sameAsShipping}
+                                setSameAsShipping={setSameAsShipping}
+                                setValues={setBillingValues}
+                                setSection={setSection}
+                                shippingValues={shippingValues} /> :
+                            haveBillingInfo && <Details values={sameAsShipping ? shippingValues : billingValues} section="billing" />}
+                    </div>
+                    <CheckoutHeading
+                        complete={false}
+                        current={section === 'payment'}
+                        section="payment"
+                        setSection={setSection}>
+                        3. Payment
+                </CheckoutHeading>
+                    <div className={styles.checkoutForm__sectionBody}>
+                        {section === 'payment' &&
+                            <PaymentForm
+                                clientSecret={clientSecret}
+                                billingValues={billingValues}
+                                shippingValues={shippingValues}
+                                sameAsShipping={sameAsShipping} />
 
-                    }
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className={styles.checkoutForm__contact} style={{ gridArea: `contact` }}>
-                <h3>Contact Info</h3>
-                <p>Email a question; expect to hear back in 24 hours: <a href="mailto:contact@muffinplants.com">contact@muffinplants.com</a></p>
-            </div>
+                <div className={styles.checkoutForm__contact} style={{ gridArea: `contact` }}>
+                    <h3>Contact Info</h3>
+                    <p>Email a question; expect to hear back in 24 hours: <a href="mailto:contact@muffinplants.com">contact@muffinplants.com</a></p>
+                </div>
+            </>) :
+                (<div style={{padding: `0 1rem 1rem 1rem`}}>
+                    <p>Cart is empty</p>
+                    <div style={{padding: `1rem 0 0 0`, width: `30%`}}><MuffinImg /></div>
+                    <Link className="link-with-arrow" to="/shop">Continue shopping</Link>
+                </div>)}
         </div>)
 }
 

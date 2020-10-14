@@ -1,5 +1,4 @@
 :root {
-    /* --accentColor: #12B991; */
     --accentColor: #00755A;
 }
 
@@ -86,6 +85,11 @@ button {
 
 .required {
     color: red;
+}
+
+#card-element {
+    border: solid 1px rgba(0,0,0, 0.85);
+    padding: 1rem;
 }
 
 @media screen and (min-width: 1000px) {
